@@ -1,14 +1,28 @@
-@(message: String)
+@(message: String, user: User)
 
 @import com.feth.play.module.pa.views.html._
 
 
 @main("Welcome to Play 2.1") {
 
-	    	@forProviders() { p =>
- 	   <a href="@p.getUrl()">@p.getKey()</a>
+@forProviders() { p =>
+    <a href="@p.getUrl()">@p.getKey()</a>
 }
+
+@if(user!=null){
+	@user.firstName
+}
+
+@currentAuth() { auth =>
+    @if(auth != null) {
+        <a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout">Logout</a>
+        
+    }
+}
+
+
     
     
         
 }
+
