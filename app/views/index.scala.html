@@ -1,0 +1,14 @@
+@(message: String)
+
+@import com.feth.play.module.pa.views.html._
+
+
+@main("Welcome to Play 2.1") {
+
+	    	@forProviders() { p =>
+ 	   <a href="@p.getUrl()">@p.getKey()</a>
+}
+    
+    
+        
+}
