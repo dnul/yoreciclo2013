@@ -1,0 +1,16 @@
+/* Registration module */
+
+#registration {
+}
+
+#registration .formContainer {
+	width: auto;
+	margin: 0 auto;
+	height: auto;
+	border-radius: 5px;
+	display: none;
+}
+
+#registration .formContainer.step1 {
+	display: block;
+}
