@@ -1,9 +1,10 @@
 @(message: String, user: User)
 
 @import com.feth.play.module.pa.views.html._
+@docHead()
+@header()
 
-
-@main("Welcome to Play 2.1") {
+@main("Yo reciclo") {
 
 @forProviders() { p =>
     <a href="@p.getUrl()">@p.getKey()</a>
@@ -25,4 +26,5 @@
     
         
 }
+@footer()
 

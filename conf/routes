@@ -8,6 +8,9 @@ GET     /logout                     com.feth.play.module.pa.controllers.Authenti
 GET     /authenticate/:provider     com.feth.play.module.pa.controllers.Authenticate.authenticate(provider: String)
 GET     /authenticate/:provider/denied     controllers.Application.oAuthDenied(provider: String)
 GET     /registration     controllers.Application.registration()
+GET     /header     controllers.Application.header()
+GET     /footer     controllers.Application.footer()
+GET     /docHead     controllers.Application.docHead()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

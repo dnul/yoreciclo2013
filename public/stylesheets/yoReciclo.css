@@ -1,0 +1,55 @@
+html, body {
+height: 100%;
+}
+#wrap {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -40px;
+}
+#push, #footer {
+	height: 40px;
+}
+#footer {
+	background-color: #6ABCF0;
+}
+#wrap > .container {
+padding-top: 85px;
+}
+
+.header .navbar-inner{
+	background: #589cdd;
+	border: none;
+	height: 85px;
+}
+.header .navbar-inner .nav {
+	top: 45px;
+}
+
+.header .navbar-inverse .nav .active > a, .header .navbar-inverse .nav .active > a:hover,.header .navbar-inverse .nav .active > a:focus {
+color: #589cdd;
+background-color: #FFF;
+}
+
+.header .navbar .nav > .active > a,.header .navbar .nav > .active > a:hover,.header .navbar .nav > .active > a:focus {
+-webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, 0.125);
+-moz-box-shadow: 0 3px 8px rgba(0, 0, 0, 0.125);
+box-shadow: 0 3px 8px rgba(0, 0, 0, 0.125);
+}
+
+.header .navbar .nav li {
+	margin-right: 20px;
+}
+
+.header .brand {
+	width: 300px;
+	height: 58px;
+	background-color: #6ABCF0;
+	padding: 27px 0 0 0;
+	margin-right:20px; 
+	text-align: center;
+}
+.header .brand img {
+	display: inline-block;
+}
+
