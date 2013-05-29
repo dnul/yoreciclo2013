@@ -1,4 +1,15 @@
 var YORECICLO = {}
+YORECICLO.Home = (function (){
+
+	return {
+	init: function (){
+		$('.facebook-btn').click(function (){
+			YORECICLO.Register.initRegistration();
+		});
+	}
+	}
+})();
+
 YORECICLO.Register = (function () {
 	// private scope
 	var registered = false;
