@@ -12,30 +12,32 @@ YORECICLO.Home = (function (){
 
 YORECICLO.Register = (function () {
 	// private scope
-	var registered = false;
+	//set to false until further backend development and completed profile info is sent to view
+	var fullProfile = false;
+	var profileData = {};
 	return {
 		//public scope
-		subMission: function (step){
+		subMission: function (step,fullProfile){
 			var next = parseInt(step) + 1;
 			$(".formContainer").hide();
 			$(".step"+next).show();
-			if(!registered) {
+			if(!fullProfile) {
 				switch (step) {
 					case 1:
-					  //alert("1");
+					  alert("1");
 					  break;
 					case 2:
-					  //alert("2");
+					  profileData.items = $('#chooseMaterial').val();
 					  break;
 					case 3:{
-					  registered = true;
+						profileData.address = $('#approximateAddress').val();
 					}
 					  break;
 				}
 			}
 		},
 		initRegistration: function (){
-			if(!registered) {
+			if(!fullProfile) {
 				$('#registration').modal('show');
 			}
 		}

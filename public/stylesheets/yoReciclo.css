@@ -37,11 +37,11 @@ box-shadow: 0 3px 8px rgba(0, 0, 0, 0.125);
 }
 
 .header .navbar .nav li {
-	margin-right: 20px;
+	margin-right: 5px;
 }
 
 .header .brand {
-	width: 300px;
+	width: 194px;
 	height: 58px;
 	background-color: #02BEF3;
 	padding: 27px 0 0 0;
