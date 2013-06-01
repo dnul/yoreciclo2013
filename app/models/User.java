@@ -50,6 +50,10 @@ public class User extends Model {
 		public String firstName;
 
 		public String lastName;
+		
+		public String address;
+		
+		public String recycledItems;
 
 		@OneToMany(cascade = CascadeType.ALL)
 		public List<LinkedAccount> linkedAccounts;

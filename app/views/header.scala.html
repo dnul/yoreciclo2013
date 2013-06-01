@@ -1,3 +1,6 @@
+@import com.feth.play.module.pa.views.html._
+
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -32,7 +35,13 @@
 				          	<div class="nav-collapse collapse">
 				          		<div class="navbar-text pull-right social-login">
 				          			<div class="twitter-btn"></div>
-					            	<div class="facebook-btn"></div>
+					            		@forProviders() { p =>
+ 										   
+							               <div class="@p.getKey()-btn">
+							               		<a style="width:100%;height:100%; display:block;" href="@p.getUrl()"></a>
+							               </div>
+										}
+					            	</div>
 		            			</div>
 				            	<ul class="nav">
 				              		<li class="active">
