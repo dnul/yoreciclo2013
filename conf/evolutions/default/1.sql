@@ -32,6 +32,9 @@ create table user (
   email_validated           boolean,
   first_name                varchar(255),
   last_name                 varchar(255),
+  address                   varchar(255),
+  recycled_items            varchar(255),
+  has_registered            boolean,
   constraint pk_user primary key (id))
 ;
 
