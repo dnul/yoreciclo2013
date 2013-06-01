@@ -5,26 +5,35 @@
 
 @main("Yo reciclo") {
 
-@forProviders() { p =>
-    <a href="@p.getUrl()">@p.getKey()</a>
-}
+	@forProviders() { p =>
+	    <a href="@p.getUrl()">@p.getKey()</a>
+	}
+	
+	@if(user!=null){
+		@user.firstName
+		
+	}
+	
+	@currentAuth() { auth =>
+	    @if(auth != null) {
+	        <a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout">Logout</a>
+	    }
+	}
 
-@if(user!=null){
-	@user.firstName
-}
-
-@currentAuth() { auth =>
-    @if(auth != null) {
-        <a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout">Logout</a>
-        
-    }
-}
-
-
-    
-    
         
 }
 @registration()
 @footer()
 
+<script type="text/javascript">
+@if(user!=null){
+	var firstName="@user.firstName";
+	var lastName="@user.lastName";
+	
+	if(firstName!="" || lastName!=""){
+		YORECICLO.Register.initRegistration();	
+	}
+	
+}
+	
+</script>

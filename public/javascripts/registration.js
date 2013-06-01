@@ -17,9 +17,9 @@ YORECICLO.Home = (function (){
 
 	return {
 	init: function (){
-		$('.facebook-btn').click(function (){
-			YORECICLO.Register.initRegistration();
-		});
+//		$('.facebook-btn').click(function (){
+//			YORECICLO.Register.initRegistration();
+//		});
 	}
 	}
 })();
