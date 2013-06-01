@@ -1,12 +1,13 @@
 var YORECICLO = {}
 YORECICLO.Utils = (function(){
 	return{
-		doRequest: function(url,data,success){
+		doRequest: function(url,data,callback){
 			$.ajax({
 				  type: "POST",
 				  url: url,
 				  data: data,
-				  success: alert("pipo")
+				  success: callback,
+				  dataType: "json"
 				});
 		}
 	}
@@ -45,7 +46,8 @@ YORECICLO.Register = (function () {
 					  break;
 					case 3:{
 						profileData.address = $('#approximateAddress').val();
-						YORECICLO.Utils.doRequest(requestUrl,profileData)
+						console.log(profileData);
+						YORECICLO.Utils.doRequest(requestUrl,profileData,YORECICLO.Register.successRegistration)
 					}
 					  break;
 				}
@@ -55,6 +57,9 @@ YORECICLO.Register = (function () {
 			if(!fullProfile) {
 				$('#registration').modal('show');
 			}
+		},
+		successRegistration: function (){
+			alert("viva perón!");
 		}
 	}
 })();

@@ -40,6 +40,10 @@ box-shadow: 0 3px 8px rgba(0, 0, 0, 0.125);
 	margin-right: 5px;
 }
 
+.header .navbar .nav li:last-child {
+	margin-right: 0px;
+}
+
 .header .brand {
 	width: 194px;
 	height: 58px;
