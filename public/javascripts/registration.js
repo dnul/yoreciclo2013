@@ -35,11 +35,9 @@ YORECICLO.Register = (function () {
 		subMission: function (step,fullProfile){
 			var next = parseInt(step) + 1;
 			$(".formContainer").hide();
-			$(".step"+next).show();
 			if(!fullProfile) {
 				switch (step) {
 					case 1:
-					  alert("1");
 					  break;
 					case 2:
 					 	profileData.items = $('#chooseMaterial').val();
@@ -52,8 +50,10 @@ YORECICLO.Register = (function () {
 					  break;
 				}
 			}
+			$(".step"+next).show();
 		},
 		initRegistration: function (){
+			console.log("le pega");
 			if(!fullProfile) {
 				$('#registration').modal('show');
 			}
