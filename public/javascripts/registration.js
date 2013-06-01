@@ -1,4 +1,18 @@
 var YORECICLO = {}
+YORECICLO.Utils = (function(){
+	return{
+		doRequest: function(url,data,success){
+			$.ajax({
+				  type: "POST",
+				  url: url,
+				  data: data,
+				  success: alert("pipo"),
+				  dataType: dataType
+				});
+		}
+	}
+})();
+
 YORECICLO.Home = (function (){
 
 	return {
@@ -15,6 +29,7 @@ YORECICLO.Register = (function () {
 	//set to false until further backend development and completed profile info is sent to view
 	var fullProfile = false;
 	var profileData = {};
+	var requestUrl = "/signup"
 	return {
 		//public scope
 		subMission: function (step,fullProfile){
@@ -27,10 +42,11 @@ YORECICLO.Register = (function () {
 					  alert("1");
 					  break;
 					case 2:
-					  profileData.items = $('#chooseMaterial').val();
+					 	profileData.items = $('#chooseMaterial').val();
 					  break;
 					case 3:{
 						profileData.address = $('#approximateAddress').val();
+						YORECICLO.Utils.doRequest(requestUrl,profileData)
 					}
 					  break;
 				}
