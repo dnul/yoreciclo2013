@@ -32,7 +32,7 @@ public class Registration extends Controller {
         Logger.info(localUser.recycledItems);
         localUser.save();
         
-        return ok("success");
+        return ok();
 	}
 
 }

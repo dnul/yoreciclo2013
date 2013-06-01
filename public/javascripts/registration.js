@@ -7,7 +7,7 @@ YORECICLO.Utils = (function(){
 				  url: url,
 				  data: data,
 				  success: callback,
-				  dataType: "json"
+				  error:callback
 				});
 		}
 	}
@@ -32,34 +32,32 @@ YORECICLO.Register = (function () {
 	var requestUrl = "/signup"
 	return {
 		//public scope
-		subMission: function (step,fullProfile){
-			var next = parseInt(step) + 1;
-			$(".formContainer").hide();
+		successRegistration: function (){
+			console.log("a ver");
+		},
+		subMission: function (elem,fullProfile,event){
+			var formContainer = $(elem).parent();
+			$(formContainer).hide();
 			if(!fullProfile) {
-				switch (step) {
-					case 1:
-					  break;
-					case 2:
-					 	profileData.items = $('#chooseMaterial').val();
-					  break;
-					case 3:{
-						profileData.address = $('#approximateAddress').val();
-						console.log(profileData);
-						YORECICLO.Utils.doRequest(requestUrl,profileData,YORECICLO.Register.successRegistration)
-					}
-					  break;
+				if($(elem).attr("id") == "registerStep2") {
+					profileData.items = $('#chooseMaterial').val();
 				}
-			}
-			$(".step"+next).show();
+				else if ($(elem).attr("id") == "registerStep3"){
+					profileData.address = $('#approximateAddress').val();
+					YORECICLO.Utils.doRequest(requestUrl,profileData,YORECICLO.Register.successRegistration)
+					}
+				}
+			$(formContainer).next().show();
 		},
 		initRegistration: function (){
-			console.log("le pega");
+			$(".formContainer").first().show();
+			$('.registrationFormModal').submit(function(event){
+				event.preventDefault();
+				YORECICLO.Register.subMission(this);
+			})
 			if(!fullProfile) {
 				$('#registration').modal('show');
 			}
-		},
-		successRegistration: function (){
-			alert("viva perón!");
 		}
 	}
 })();
