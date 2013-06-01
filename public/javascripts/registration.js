@@ -6,8 +6,7 @@ YORECICLO.Utils = (function(){
 				  type: "POST",
 				  url: url,
 				  data: data,
-				  success: alert("pipo"),
-				  dataType: dataType
+				  success: alert("pipo")
 				});
 		}
 	}

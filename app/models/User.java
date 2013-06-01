@@ -54,6 +54,8 @@ public class User extends Model {
 		public String address;
 		
 		public String recycledItems;
+		
+		public Boolean hasRegistered;
 
 		@OneToMany(cascade = CascadeType.ALL)
 		public List<LinkedAccount> linkedAccounts;
@@ -99,6 +101,7 @@ public class User extends Model {
 			  }
 			}
 
+			user.hasRegistered=false;
 			user.save();
 //			user.saveManyToManyAssociations("roles");
 			// user.saveManyToManyAssociations("permissions");

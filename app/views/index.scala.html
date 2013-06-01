@@ -29,8 +29,11 @@
 @if(user!=null){
 	var firstName="@user.firstName";
 	var lastName="@user.lastName";
+	var hasRegistered= "@user.hasRegistered"=="true"?true:false;
+	console.log("@user.hasRegistered");
+	console.log(hasRegistered);
 	
-	if(firstName!="" || lastName!=""){
+	if(!Boolean(hasRegistered)){
 		YORECICLO.Register.initRegistration();	
 	}
 	
