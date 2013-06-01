@@ -1,2 +1,3 @@
-web:    play run --http.port=$PORT $PLAY_OPTS  -Dconfig.resource=prod.conf -DapplyEvolutions.default=true
+web: target/start -Dhttp.port=${PORT} ${JAVA_OPTS} -DapplyEvolutions.default=true  -Dconfig.resource=prod.conf 
+
 
