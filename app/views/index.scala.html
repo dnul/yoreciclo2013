@@ -11,7 +11,6 @@
 	
 	@if(user!=null){
 		@user.firstName
-		
 	}
 	
 	@currentAuth() { auth =>
@@ -22,6 +21,9 @@
 
         
 }
+
+
+			
 @registration()
 @footer()
 
@@ -30,8 +32,6 @@
 	var firstName="@user.firstName";
 	var lastName="@user.lastName";
 	var hasRegistered= "@user.hasRegistered"=="true"?true:false;
-	console.log("@user.hasRegistered");
-	console.log(hasRegistered);
 	
 	if(!Boolean(hasRegistered)){
 		YORECICLO.Register.initRegistration();	

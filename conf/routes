@@ -11,9 +11,12 @@ GET     /registration     controllers.Application.registration()
 GET     /header     controllers.Application.header()
 GET     /footer     controllers.Application.footer()
 GET     /docHead     controllers.Application.docHead()
+GET		/registerMaps controllers.Application.maps()
 
 #registration
 POST     /signup     controllers.Registration.signUp()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/*file            controllers.Assets.at(path="/public", file)
+
+

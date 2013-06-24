@@ -9,6 +9,8 @@ import views.html.registration;
 import views.html.header;
 import views.html.footer;
 import views.html.docHead;
+import views.html.maps;
+
 
 import com.feth.play.module.pa.PlayAuthenticate;
 import com.feth.play.module.pa.user.AuthUser;
@@ -41,7 +43,7 @@ public class Application extends Controller {
 	}
 
     public static Result header() {
-        return ok(header.render());
+    	return ok(header.render());
     }
 
     public static Result footer() {
@@ -50,5 +52,9 @@ public class Application extends Controller {
 
     public static Result docHead() {
         return ok(docHead.render());
+    }
+    
+    public static Result maps() {
+        return ok(maps.render());
     }
 }
