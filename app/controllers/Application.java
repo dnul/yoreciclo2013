@@ -10,6 +10,7 @@ import views.html.header;
 import views.html.footer;
 import views.html.docHead;
 import views.html.maps;
+import views.html.mapsHome;
 
 
 import com.feth.play.module.pa.PlayAuthenticate;
@@ -56,5 +57,9 @@ public class Application extends Controller {
     
     public static Result maps() {
         return ok(maps.render());
+    }
+    
+    public static Result mapsHome() {
+        return ok(mapsHome.render());
     }
 }
