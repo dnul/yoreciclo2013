@@ -14,8 +14,8 @@ height: 100%;
 	background-color: #02BEF3;
 }
 #wrap > .container {
-padding-top: 85px;
 }
+
 .header .navbar-inner{
 	background: #589cdd;
 	border: none;
@@ -23,6 +23,10 @@ padding-top: 85px;
 }
 .header .navbar-inner .nav {
 	top: 45px;
+}
+.header .nav li {
+	width: 150px;
+	font-size: 13px;
 }
 
 .header .navbar-inverse .nav .active > a, .header .navbar-inverse .nav .active > a:hover,.header .navbar-inverse .nav .active > a:focus {
@@ -51,6 +55,7 @@ box-shadow: 0 3px 8px rgba(0, 0, 0, 0.125);
 	padding: 27px 0 0 0;
 	margin-right:20px; 
 	text-align: center;
+	margin-left: 0px;
 }
 .header .brand img {
 	display: inline-block;
@@ -75,7 +80,7 @@ box-shadow: 0 3px 8px rgba(0, 0, 0, 0.125);
 	margin: 0 auto;
 	cursor: pointer;
 }
-.home.container-fluid {
-	padding-top: 85px;
-	margin: none;
-}
+
+.home .sidebar {
+	background: #CCCCCC;
+} 

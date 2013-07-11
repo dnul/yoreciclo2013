@@ -38,6 +38,7 @@
 				
 				app.map=map;
 			}
+			
 			google.maps.event.addDomListener(window, 'load', initialize);
 			
 			var ac = new usig.AutoCompleter('address', {
@@ -50,29 +51,29 @@
 	       			console.log('Se seleccionó la opción: '+option);
 	       		},
 
-	afterGeoCoding : function(pt) {
+				afterGeoCoding : function(pt) {
 					if (pt instanceof usig.Punto) {
 						$.ajax({
-									type : "GET",
-									url : 'http://ws.usig.buenosaires.gob.ar/rest/convertir_coordenadas?x=' + pt.x +'&y=' + pt.y + '&output=lonlat',
-									data : null,
-									dataType: 'jsonp',
-									success : function(d) {
-										console.log(d);
-										console.log("lat:" + d.resultado.x + " lon:" + d.resultado.y);
-										var myLatlng = new google.maps.LatLng(d.resultado.y,d.resultado.x);
-										//myLatlng = new google.maps.LatLng(-34.602128,-58.430895);
-										
-										console.log(myLatlng);
-										var marker = new google.maps.Marker({
-										      position: myLatlng,
-										      map: app.map,
-										      title: 'ubicación'
-										  });
-									
-									},
-									error : null
-								});
+							type : "GET",
+							url : 'http://ws.usig.buenosaires.gob.ar/rest/convertir_coordenadas?x=' + pt.x +'&y=' + pt.y + '&output=lonlat',
+							data : null,
+							dataType: 'jsonp',
+							success : function(d) {
+								console.log(d);
+								console.log("lat:" + d.resultado.x + " lon:" + d.resultado.y);
+								var myLatlng = new google.maps.LatLng(d.resultado.y,d.resultado.x);
+								//myLatlng = new google.maps.LatLng(-34.602128,-58.430895);
+								
+								console.log(myLatlng);
+								var marker = new google.maps.Marker({
+								      position: myLatlng,
+								      map: app.map,
+								      title: 'ubicación'
+								  });
+							
+							},
+							error : null
+						});
 					}
 				}
 			});
