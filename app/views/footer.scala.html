@@ -9,6 +9,39 @@
 YORECICLO.Home.init();
 </script>
 
+<script type="text/javascript">
+			var app = {};
+			function initialize() {
+				var mapOptions = {
+					center : new google.maps.LatLng(-34.602128,-58.430895),
+					zoom : 12,
+					mapTypeId : google.maps.MapTypeId.ROADMAP
+				};
+				var map = new google.maps.Map(document.getElementById("map-canvas"),
+						mapOptions);
+				
+				app.map=map;
 
+					console.log(layer);
+			}
+			google.maps.event.addDomListener(window, 'load', initialize);
+			$.getJSON("/assets/coperativas_dondereciclo.json",function(zonas){
+				for (var i in zonas) {
+                    color = '#'+ ('000000' + (Math.random()*0xFFFFFF<<0).toString(16)).slice(-6)
+                    zona = new google.maps.Polygon({
+                        paths: eval(zonas[i].polygon),
+                        strokeColor: color,
+                        strokeOpacity: 0.5,
+                        strokeWeight: 0.5,
+                        fillColor: color,
+                        fillOpacity: 0.5,
+                    });
+                   zona.setMap(app.map);
+				}
+			});
+			
+		  
+		
+</script>
 </body>
 </html>
