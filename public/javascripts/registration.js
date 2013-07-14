@@ -39,10 +39,10 @@ YORECICLO.Register = (function () {
 			var formContainer = $(elem).parent();
 			$(formContainer).hide();
 			if(!fullProfile) {
-				if($(elem).attr("id") == "registerStep2") {
+				if($(elem).attr("id") == "registerStep1") {
 					profileData.items = $('#chooseMaterial').val();
 				}
-				else if ($(elem).attr("id") == "registerStep3"){
+				else if ($(elem).attr("id") == "registerStep2"){
 					profileData.address = $('#approximateAddress').val();
 					YORECICLO.Utils.doRequest(requestUrl,profileData,YORECICLO.Register.successRegistration)
 					}
