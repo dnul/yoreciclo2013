@@ -29,11 +29,12 @@ YORECICLO.Register = (function () {
 	//set to false until further backend development and completed profile info is sent to view
 	var fullProfile = false;
 	var profileData = {};
-	var requestUrl = "/signup"
+	var requestUrl = "/signup";
+	var app = {};
 	return {
 		//public scope
 		successRegistration: function (){
-			console.log("a ver");
+			console.log(profileData);
 		},
 		subMission: function (elem,fullProfile,event){
 			var formContainer = $(elem).parent();
@@ -43,7 +44,7 @@ YORECICLO.Register = (function () {
 					profileData.items = $('#chooseMaterial').val();
 				}
 				else if ($(elem).attr("id") == "registerStep2"){
-					profileData.address = $('#approximateAddress').val();
+					profileData.address = this.mapCoordenates;
 					YORECICLO.Utils.doRequest(requestUrl,profileData,YORECICLO.Register.successRegistration)
 					}
 				}
@@ -58,6 +59,8 @@ YORECICLO.Register = (function () {
 			if(!fullProfile) {
 				$('#registration').modal('show');
 			}
-		}
+		},
+		mapCoordenates: []
 	}
 })();
+

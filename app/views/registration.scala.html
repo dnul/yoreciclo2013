@@ -1,37 +1,41 @@
-
+<div id="approximateAddress" class="hide"></div>
 <div id="registration" class="modal hide fade">
 	<div class="modal-header">
 	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 	    <h3>Registración</h3>
   	</div>
-	<div class="formContainer">
-		<form id="registerStep1" class="registrationFormModal">
-    		<fieldset>
-			    <label>Que vas a juntar?</label>
-			    <span class="help-block">Seleccioná que cosas reciclás</span>
-				<select multiple="multiple" id="chooseMaterial">
-				  <option>Vidrio</option>
-				  <option>Cartón</option>
-				  <option>Plásticos</option>
-				  <option>Pilas</option>
-				  <option>Aceite</option>
-				</select>
-			    <button type="submit" class="btn">Submit</button>
-		  	</fieldset>
-		</form>
-	</div>
-	<div class="formContainer">
-		<form id="registerStep2" class="registrationFormModal">
-    		<fieldset>
-			    <label>Ingresa tu direccion: </label>
-				<input id="address" type="text"/>
-			    <button type="submit" class="btn">Submit</button>
-		  	</fieldset>
-		</form>
-	    <div id="map-registration" style=" height:400px; width:100%; display:none;"></div>
-	</div>
-	<div class="formContainer step3">
-		<h1>FIESTA</h1>
+  	<div class="modal-body">
+		<div class="formContainer">
+			<h4>Ya estás registrado</h4>
+			<h5>Solo necesitamos algunos datos más para registrar que materiales estás dispuesto a juntar y donde te ubicás geográficamente</h5>
+			<form id="registerStep1" class="registrationFormModal">
+	    		<fieldset>
+				    <label>Que vas a juntar?</label>
+				    <span class="help-block">Seleccioná que cosas reciclás</span>
+					<select multiple="multiple" id="chooseMaterial">
+					  <option>Vidrio</option>
+					  <option>Cartón</option>
+					  <option>Plásticos</option>
+					  <option>Pilas</option>
+					  <option>Aceite</option>
+					</select>
+				    <button type="submit" class="btn">Submit</button>
+			  	</fieldset>
+			</form>
+		</div>
+		<div class="formContainer">
+			<form id="registerStep2" class="registrationFormModal">
+	    		<fieldset>
+				    <label>Ingresa tu direccion: </label>
+					<input id="address" type="text"/>
+				    <button type="submit" class="btn">Submit</button>
+			  	</fieldset>
+			</form>
+		    <div id="map-registration" style=" height:400px; width:100%; display:none;"></div>
+		</div>
+		<div class="formContainer step3">
+			<h1>FIESTA</h1>
+		</div>
 	</div>
 </div>
 <script type="text/javascript">
@@ -66,12 +70,8 @@
 							data : null,
 							dataType: 'jsonp',
 							success : function(d) {
-								console.log(d);
-								console.log("lat:" + d.resultado.x + " lon:" + d.resultado.y);
 								var myLatlng = new google.maps.LatLng(d.resultado.y,d.resultado.x);
 								//myLatlng = new google.maps.LatLng(-34.602128,-58.430895);
-								
-								console.log(myLatlng);
 								$("#map-registration").show();
 								initializeMap();
 								var marker = new google.maps.Marker({
@@ -81,6 +81,7 @@
 								  });
 								app.map.setCenter(marker.getPosition());
 								app.map.setZoom(15);
+								YORECICLO.Register.mapCoordenates = ([d.resultado.y,d.resultado.x]);
 							
 							},
 							error : null

@@ -27,6 +27,7 @@
 
 <script type="text/javascript">
 			var app = {};
+			var lat =0;
 			function initialize() {
 				var mapOptions = {
 					center : new google.maps.LatLng(-34.602128,-58.430895),
@@ -48,7 +49,6 @@
 	       			$('#address').val('').removeAttr('disabled').focus();	        			
 	       		},
 	       		afterSelection: function(option) {
-	       			console.log('Se seleccionó la opción: '+option);
 	       		},
 
 				afterGeoCoding : function(pt) {
@@ -59,11 +59,8 @@
 							data : null,
 							dataType: 'jsonp',
 							success : function(d) {
-								console.log(d);
-								console.log("lat:" + d.resultado.x + " lon:" + d.resultado.y);
 								var myLatlng = new google.maps.LatLng(d.resultado.y,d.resultado.x);
 								//myLatlng = new google.maps.LatLng(-34.602128,-58.430895);
-								
 								console.log(myLatlng);
 								var marker = new google.maps.Marker({
 								      position: myLatlng,
