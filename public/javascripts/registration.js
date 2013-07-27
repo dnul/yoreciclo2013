@@ -45,6 +45,8 @@ YORECICLO.Register = (function () {
 				}
 				else if ($(elem).attr("id") == "registerStep2"){
 					profileData.address = this.mapCoordenates;
+					//TODO: poner texto de la direccion posta
+//					profileData.addressText="araoz";
 					YORECICLO.Utils.doRequest(requestUrl,profileData,YORECICLO.Register.successRegistration)
 					}
 				}

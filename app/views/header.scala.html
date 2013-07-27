@@ -38,6 +38,12 @@
 							               		<a style="width:100%;height:100%; display:block;" href="@p.getUrl()"></a>
 							               </div>
 										}
+										
+										@currentAuth() { auth =>
+	 									   @if(auth != null) {
+	        									<a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout">Logout</a>
+	    									}
+										}
 				            	</div>
 	            			</div>
 			          	</div>

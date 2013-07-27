@@ -19,14 +19,18 @@ public class Registration extends Controller {
         User localUser = Application.getLocalUser(session());
 
         String[] items = map.get("items[]");
-        String direccion = map.get("address")[0];
+        String[] coords = map.get("address[]");
+        String  address = map.get("addressText")!=null?map.get("addressText")[0]:null;
         
         Logger.info(items.toString());
-        Logger.info(direccion.toString());
+        Logger.info(coords.toString());
         
         JsonNode itemsJson = Json.toJson(items);
         
-        localUser.address=direccion;
+        localUser.lat=coords[0];
+        localUser.lon=coords[1];
+        
+        localUser.address=address;
         localUser.recycledItems=itemsJson.toString();
         localUser.hasRegistered=true;
         Logger.info(localUser.recycledItems);

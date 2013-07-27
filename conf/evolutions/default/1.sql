@@ -33,6 +33,8 @@ create table user (
   first_name                varchar(255),
   last_name                 varchar(255),
   address                   varchar(255),
+  lat                       varchar(255),
+  lon                       varchar(255),
   recycled_items            varchar(255),
   has_registered            boolean,
   constraint pk_user primary key (id))
