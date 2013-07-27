@@ -59,7 +59,7 @@ YORECICLO.Register = (function () {
 				YORECICLO.Register.subMission(this);
 			})
 			if(!fullProfile) {
-				$('#registration').modal('show');
+				//$('#registration').modal('show');
 			}
 		},
 		mapCoordenates: []
