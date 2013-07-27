@@ -1,6 +1,15 @@
 package controllers;
 
+import java.util.List;
+
+import org.codehaus.jackson.JsonFactory;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.node.ArrayNode;
+import org.codehaus.jackson.node.JsonNodeFactory;
+import org.codehaus.jackson.node.ObjectNode;
+
 import models.User;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http.Session;
 import play.mvc.Result;
@@ -37,7 +46,24 @@ public class Application extends Controller {
 		final User localUser = User.findByAuthUserIdentity(currentAuthUser);
 		return localUser;
 	}
-  
+	
+	public static Result registeredUsers() {
+		ArrayNode arrayNode = new ArrayNode(JsonNodeFactory.instance);
+
+		List<User> all = User.find.all();
+		for (User u : all) {
+			ObjectNode newObject = Json.newObject();
+			newObject.put("recycledItems", u.recycledItems);
+			newObject.put("name", u.name);
+			newObject.put("facebookId",
+					all.get(0).linkedAccounts.get(0).providerUserId);
+			arrayNode.add(newObject);
+			newObject.put("lat", u.lat);
+			newObject.put("lon", u.lon);
+		}
+		return ok(arrayNode);
+	}
+	
 
 	public static Result registration() {
 	    return ok(registration.render());

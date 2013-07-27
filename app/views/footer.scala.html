@@ -23,6 +23,7 @@ YORECICLO.Home.init();
 				app.map=map;
 			}
 			google.maps.event.addDomListener(window, 'load', initialize);
+			
 			$.getJSON("/assets/coperativas_dondereciclo.json",function(zonas){
 				for (var i in zonas) {
                     color = '#'+ ('000000' + (Math.random()*0xFFFFFF<<0).toString(16)).slice(-6)
@@ -37,6 +38,42 @@ YORECICLO.Home.init();
                    zona.setMap(app.map);
 				}
 			});
+			
+			$.ajax({
+				  type: "GET",
+				  url: "/registeredUsers",
+				  success: function(data){
+					  console.log(data);
+					  for(var i=0;i<data.length;i++){
+						  var user=data[i];						  
+						  var point=new google.maps.LatLng(user.lat,user.lon);
+						  console.log(point);
+						  console.log(app.map);
+						  
+// 						  var marker = new google.maps.Marker({map: app.map, position: point, clickable: true});
+						  
+						  var marker = new google.maps.Marker({
+						      position: point,
+						      map: app.map,
+						      title: 'ubicaci—n'
+						  });
+						  
+						  console.log(eval(user.recycledItems));
+						  var contentHtml = '<p><b>' + user.name + '</b></p>'  + '<p>Junta:' +  user.recycledItems + '</p><p><img src="http://graph.facebook.com/' + user.facebookId + '/picture" ><p>';
+						  marker.info = new google.maps.InfoWindow({
+							    content: contentHtml
+							  });
+						
+						  console.log(marker);
+						  google.maps.event.addListener(marker, 'click', function() {
+							    marker.info.open(app.map, marker);
+							  });
+					  }
+					  
+					  
+
+				  }
+				});
 			
 		  
 		

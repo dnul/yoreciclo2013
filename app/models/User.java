@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
@@ -37,6 +39,7 @@ public class User extends Model {
 	 	@Required
 	    public String name;
 
+	 	@JsonIgnore
 	    @Required
 	    @Email
 	    public String email;
@@ -61,6 +64,7 @@ public class User extends Model {
 		
 		public Boolean hasRegistered;
 
+		@JsonIgnore
 		@OneToMany(cascade = CascadeType.ALL)
 		public List<LinkedAccount> linkedAccounts;
 	    

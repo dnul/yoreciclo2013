@@ -100,3 +100,7 @@ box-shadow: 0 3px 8px rgba(0, 0, 0, 0.125);
 	margin: 10px auto;
 	background-color: #FFF;
 }
+
+.map img {
+    max-width: none;
+}
