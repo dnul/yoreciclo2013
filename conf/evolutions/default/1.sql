@@ -1,3 +1,5 @@
+# --- Created by Ebean DDL
+# To stop Ebean DDL generation, remove this comment and start using Evolutions
 
 # --- !Ups
 
@@ -21,7 +23,7 @@ create table token_action (
   constraint pk_token_action primary key (id))
 ;
 
-create table user (
+create table YRUser (
   id                        bigint not null,
   name                      varchar(255),
   email                     varchar(255),
@@ -36,37 +38,33 @@ create table user (
   recycled_items            varchar(255),
   has_registered            boolean,
   coop_ids                  varchar(255),
-  constraint pk_user primary key (id))
+  constraint pk_YRUser primary key (id))
 ;
 
 create sequence linked_account_seq;
 
 create sequence token_action_seq;
 
-create sequence user_seq;
+create sequence YRUser_seq;
 
-alter table linked_account add constraint fk_linked_account_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
+alter table linked_account add constraint fk_linked_account_user_1 foreign key (user_id) references YRUser (id);
 create index ix_linked_account_user_1 on linked_account (user_id);
-alter table token_action add constraint fk_token_action_targetUser_2 foreign key (target_user_id) references user (id) on delete restrict on update restrict;
+alter table token_action add constraint fk_token_action_targetUser_2 foreign key (target_user_id) references YRUser (id);
 create index ix_token_action_targetUser_2 on token_action (target_user_id);
 
 
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+drop table if exists linked_account cascade;
 
-drop table if exists linked_account;
+drop table if exists token_action cascade;
 
-drop table if exists token_action;
-
-drop table if exists user;
-
-SET REFERENTIAL_INTEGRITY TRUE;
+drop table if exists YRUser cascade;
 
 drop sequence if exists linked_account_seq;
 
 drop sequence if exists token_action_seq;
 
-drop sequence if exists user_seq;
+drop sequence if exists YRUser_seq;
 

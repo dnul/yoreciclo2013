@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -25,6 +26,7 @@ import com.feth.play.module.pa.user.FirstLastNameIdentity;
 import com.feth.play.module.pa.user.NameIdentity;
 
 @Entity
+@Table(name="YRUser")
 public class User extends Model {
 	
 	 	/**
