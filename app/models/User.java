@@ -53,6 +53,10 @@ public class User extends Model {
 		
 		public String address;
 		
+		public String lat;
+		
+		public String lon;
+		
 		public String recycledItems;
 		
 		public Boolean hasRegistered;
