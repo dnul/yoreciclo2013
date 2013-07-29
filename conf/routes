@@ -13,6 +13,7 @@ GET     /footer     controllers.Application.footer()
 GET     /docHead     controllers.Application.docHead()
 GET		/registerMaps controllers.Application.maps()
 GET		/mapsHome controllers.Application.mapsHome()
+GET		/registeredUsers 			controllers.Application.registeredUsers()
 
 #registration
 POST     /signup     controllers.Registration.signUp()
