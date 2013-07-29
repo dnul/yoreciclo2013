@@ -12,7 +12,8 @@ object ApplicationBuild extends Build {
     javaCore,
     javaJdbc,
     javaEbean,
-    "com.feth" %% "play-authenticate" % "0.2.4-SNAPSHOT"
+    "com.feth" %% "play-authenticate" % "0.2.4-SNAPSHOT",
+    "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
   )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
