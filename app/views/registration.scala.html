@@ -84,8 +84,10 @@
 </div>
 @footer()
 <script type="text/javascript">
-YORECICLO.Maps.initRegitrationMap();
 $(".icon").click(function(){
+YORECICLO.Maps.initRegitrationMap();
+
+cooperativas.init();
 	alert($(this).attr('data-material'));
 	if(!$(this).hasClass('disabled')){
 		$(this).addClass("disabled");

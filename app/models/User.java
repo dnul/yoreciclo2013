@@ -60,6 +60,8 @@ public class User extends Model {
 		public String recycledItems;
 		
 		public Boolean hasRegistered;
+		
+		public String coopIds;
 
 		@OneToMany(cascade = CascadeType.ALL)
 		public List<LinkedAccount> linkedAccounts;
