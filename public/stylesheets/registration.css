@@ -8,9 +8,29 @@
 	margin: 0 auto;
 	height: auto;
 	border-radius: 5px;
-	display: none;
+	display: block;
 }
 
 #registration .formContainer.step1 {
 	display: block;
+}
+#registration .material {
+	text-align: center;
+}
+#registration .material .icon {
+	width: 76px;
+	height: 76px;
+	margin:0 auto;
+	cursor: pointer;
+}
+
+#registration .material .icon.plastico{
+	background: url("../images/icon-plastico.jpg")scroll no-repeat 0 0 transparent;
+	background-size: 76px 76px;
+}
+#registration .material .icon.plastico.disabled{
+	opacity: 0.4;
+}
+#registration .material .label{
+	margin: 0px auto;
 }

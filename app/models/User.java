@@ -63,6 +63,8 @@ public class User extends Model {
 		public String recycledItems;
 		
 		public Boolean hasRegistered;
+		
+		public String coopIds;
 
 		@JsonIgnore
 		@OneToMany(cascade = CascadeType.ALL)

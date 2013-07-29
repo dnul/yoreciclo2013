@@ -44,9 +44,15 @@ YORECICLO.Register = (function () {
 					profileData.items = $('#chooseMaterial').val();
 				}
 				else if ($(elem).attr("id") == "registerStep2"){
+					profileData.items =[];
+					$(".disabled").each(function(){
+						console.log($(this).attr('data-material'));
+						profileData.items.push($(this).attr('data-material'));
+					});
+					
 					profileData.address = this.mapCoordenates;
-					//TODO: poner texto de la direccion posta
-//					profileData.addressText="araoz";
+					profileData.coopIds= this.idCooperativas;
+					profileData.addressText=$("#address").val();
 					YORECICLO.Utils.doRequest(requestUrl,profileData,YORECICLO.Register.successRegistration)
 					}
 				}
@@ -59,10 +65,22 @@ YORECICLO.Register = (function () {
 				YORECICLO.Register.subMission(this);
 			})
 			if(!fullProfile) {
-				$('#registration').modal('show');
+				//$('#registration').modal('show');
 			}
 		},
-		mapCoordenates: []
+		getCooperativas: function(coords){
+			var coops=[];
+			for(var i=0;i<cooperativas.polygons.length;i++){
+				var poly=cooperativas.polygons[i];
+				var latLng=new google.maps.LatLng(coords[0],coords[1]);
+				if(poly.containsLatLng(latLng)){
+					coops.push(cooperativas.data[i]);
+				}
+			}
+			return coops;
+		},
+		mapCoordenates: [],
+		idCooperativas: []
 	}
 })();
 
@@ -112,7 +130,10 @@ YORECICLO.Maps = (function (){
 									YORECICLO.Maps.app.map.setCenter(marker.getPosition());
 									YORECICLO.Maps.app.map.setZoom(15);
 									YORECICLO.Register.mapCoordenates = ([d.resultado.y,d.resultado.x]);
-								
+									var coopIds=YORECICLO.Register.getCooperativas([d.resultado.y,d.resultado.x]).map(function(a){
+										return a.id;
+									});
+									YORECICLO.Register.idCooperativas=coopIds; 									
 								},
 								error : null
 							});

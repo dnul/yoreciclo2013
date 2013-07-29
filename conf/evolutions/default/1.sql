@@ -37,6 +37,7 @@ create table user (
   lon                       varchar(255),
   recycled_items            varchar(255),
   has_registered            boolean,
+  coop_ids                  varchar(255),
   constraint pk_user primary key (id))
 ;
 

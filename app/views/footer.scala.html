@@ -1,82 +1,13 @@
-		
+
 
 <div id="footer" class="footer">
-        <div class="container">
-         Sitio realizado y administrado por Centro Cultural Matienzo.
-        </div>
+	<div class="container">Sitio realizado y administrado por Centro
+		Cultural Matienzo.</div>
 </div>
 <script type="text/javascript">
-YORECICLO.Home.init();
+	YORECICLO.Home.init();
 </script>
 
-<script type="text/javascript">
-			var app = {};
-			function initialize() {
-				var mapOptions = {
-					center : new google.maps.LatLng(-34.602128,-58.430895),
-					zoom : 12,
-					mapTypeId : google.maps.MapTypeId.ROADMAP
-				};
-				var map = new google.maps.Map(document.getElementById("map-canvas"),
-						mapOptions);
-				
-				app.map=map;
-			}
-			google.maps.event.addDomListener(window, 'load', initialize);
-			
-			$.getJSON("/assets/coperativas_dondereciclo.json",function(zonas){
-				for (var i in zonas) {
-                    color = '#'+ ('000000' + (Math.random()*0xFFFFFF<<0).toString(16)).slice(-6)
-                    zona = new google.maps.Polygon({
-                        paths: eval(zonas[i].polygon),
-                        strokeColor: color,
-                        strokeOpacity: 0.5,
-                        strokeWeight: 0.5,
-                        fillColor: color,
-                        fillOpacity: 0.5,
-                    });
-                   zona.setMap(app.map);
-				}
-			});
-			
-			$.ajax({
-				  type: "GET",
-				  url: "/registeredUsers",
-				  success: function(data){
-					  console.log(data);
-					  for(var i=0;i<data.length;i++){
-						  var user=data[i];						  
-						  var point=new google.maps.LatLng(user.lat,user.lon);
-						  console.log(point);
-						  console.log(app.map);
-						  
-// 						  var marker = new google.maps.Marker({map: app.map, position: point, clickable: true});
-						  
-						  var marker = new google.maps.Marker({
-						      position: point,
-						      map: app.map,
-						      title: 'ubicaci—n'
-						  });
-						  
-						  console.log(eval(user.recycledItems));
-						  var contentHtml = '<p><b>' + user.name + '</b></p>'  + '<p>Junta:' +  user.recycledItems + '</p><p><img src="http://graph.facebook.com/' + user.facebookId + '/picture" ><p>';
-						  marker.info = new google.maps.InfoWindow({
-							    content: contentHtml
-							  });
-						
-						  console.log(marker);
-						  google.maps.event.addListener(marker, 'click', function() {
-							    marker.info.open(app.map, marker);
-							  });
-					  }
-					  
-					  
 
-				  }
-				});
-			
-		  
-		
-</script>
 </body>
 </html>
