@@ -93,7 +93,7 @@ function initialize() {
             		    strokeWeight: 3,
             		  });
             	trail.setMap(app.map);
-            	google.maps.event.addDomListener(flightPath,'click',function(e){
+            	google.maps.event.addDomListener(trail,'click',function(e){
             		console.log(recorrido);
             		var infowindow = new google.maps.InfoWindow({
                         content: "<p>" + recorrido[4] + "</p><p>" + recorrido[3] +"</p>"});
