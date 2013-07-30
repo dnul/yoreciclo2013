@@ -2,25 +2,23 @@ package controllers;
 
 import java.util.List;
 
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonNode;
+import models.User;
+
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 
-import models.User;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http.Session;
 import play.mvc.Result;
-import views.html.index;
-import views.html.registration;
-import views.html.header;
-import views.html.footer;
 import views.html.docHead;
+import views.html.footer;
+import views.html.header;
+import views.html.index;
 import views.html.maps;
 import views.html.mapsHome;
-
+import views.html.registration;
 
 import com.feth.play.module.pa.PlayAuthenticate;
 import com.feth.play.module.pa.user.AuthUser;

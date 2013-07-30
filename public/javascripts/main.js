@@ -1,5 +1,4 @@
 var app = {};
-console.log('hola');
 function initialize() {
 	console.log('i');
 	var mapOptions = {
@@ -12,13 +11,13 @@ function initialize() {
 
 	app.map = map;
 	app.polygons = [];
+	app.trails = [];
 
 	$.getJSON("/assets/coperativas_dondereciclo.json", function(zonas) {
 		console.log('hola');
 		for ( var i in zonas) {
-			color = '#'
-					+ ('000000' + (Math.random() * 0xFFFFFF << 0).toString(16))
-							.slice(-6)
+			color =zonas[i].color;
+			console.log(color);
 			zona = new google.maps.Polygon({
 				paths : eval(zonas[i].polygon),
 				strokeColor : color,
@@ -64,25 +63,64 @@ function initialize() {
 		  }
 		});
 
-	// var layer = new google.maps.FusionTablesLayer({
-	// query: {
-	// select: 'location',
-	// from: '118cbZRCvb78ebldQprexrXYNUePEc8ezKmef4Bo'
-	// },
-	// options: {
-	// suppressInfoWindows: true
-	// },
-	// styles: [{
-	// polygonOptions: {
-	// fillColor: '#00FF00',
-	// fillOpacity: 1.0,
-	// strokeWeight: 0.5,
-	// strokeOpacity:0.5
-	// }
-	// }],
-	// map: app.map
-	// });
-	// layer.setMap(app.map);
+	var query = "SELECT Location, type, coperativa_id, info, materiales_ids FROM "
+			+ '118cbZRCvb78ebldQprexrXYNUePEc8ezKmef4Bo'
+			+ " WHERE type='recorrido'";
+	var encodedQuery = encodeURIComponent(query);
+
+	// Construct the URL
+	var url = [ 'https://www.googleapis.com/fusiontables/v1/query' ];
+	url.push('?sql=' + encodedQuery);
+	url.push('&key=AIzaSyCOxacNgvjqDguY2ALWc-QvzuMXTRLSDM4');
+	url.push('&callback=?');
+	$.ajax({
+        url: url.join(''),
+        dataType: 'jsonp',
+        success: function (data) {
+            var rows = data['rows'];
+            
+            for(var i=0;i<rows.length;i++){
+            	var recorrido=rows[i];
+            	console.log(recorrido);
+            	
+            	var path=recorrido[0].geometry.coordinates.map(function(d){
+            		return new google.maps.LatLng(d[1],d[0]);
+            	});
+            	var trail = new google.maps.Polyline({
+            		    path: path,
+            		    strokeColor: "#FF0000",
+            		    strokeOpacity: 0.5,
+            		    strokeWeight: 3,
+            		  });
+            	trail.setMap(app.map);
+            	google.maps.event.addDomListener(flightPath,'click',function(e){
+            		console.log(recorrido);
+            		var infowindow = new google.maps.InfoWindow({
+                        content: "<p>" + recorrido[4] + "</p><p>" + recorrido[3] +"</p>"});
+        			infowindow.setPosition( path[0]);
+        			infowindow.open(app.map);
+            	})
+            }
+        }
+	});
+//	 var layer = new google.maps.FusionTablesLayer({
+//		query : {
+//			select : 'location',
+//			from : '118cbZRCvb78ebldQprexrXYNUePEc8ezKmef4Bo',
+//			where: "type = 'recorrido'"
+//		},
+//		options : {
+//			suppressInfoWindows : false
+//		},
+//		styles : [ {
+//			polylineOptions : {
+//				 strokeColor: "#00ffff",
+//				 strokeWeight: "2" 
+//			}
+//		} ],
+//		map : app.map
+//	});
+//	layer.setMap(app.map);
 	// console.log(layer);
 
 }
