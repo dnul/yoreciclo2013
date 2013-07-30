@@ -7,76 +7,91 @@
 	<div id="registration" class="container">
 		<div class="row">
 			<div class="span12">
-				<div class="formContainer">
-					<h2>Ya estás registrado</h2>
-					<h5>Solo necesitamos algunos datos más para registrar que materiales estás dispuesto a juntar y donde te ubicás geográficamente</h5>
-					<form id="registerStep1" class="registrationFormModal">
-			    		<fieldset>
-						    <label>Que vas a juntar?</label>
-						    <span class="help-block">Seleccioná que elementos vas a separar para su posterior reciclado</span>
-							<div class="row">
-								<div class="material span2">
-									<div class="icon plastico" data-material="Plastico"></div>
-									<div class="label">Plastico</div>
+				<form id="registerStep" class="registrationFormModal">
+					<div class="formContainer step1">
+						<h2>Ya estás registrado</h2>
+						<h5>Solo necesitamos algunos datos más para registrar que materiales estás dispuesto a juntar y donde te ubicás geográficamente</h5>
+				    		<fieldset>
+							    <label>Que vas a juntar?</label>
+							    <span class="help-block">Seleccioná que elementos vas a separar para su posterior reciclado</span>
+								<div class="row">
+									<div class="material span2">
+										<div class="icon disabled plastico" data-material="1"></div>
+										<div class="label">Plastico</div>
+									</div>
+									<div class="material span2">
+										<div class="icon disabled tapitas" data-material="2"></div>
+										<div class="label">Tapitas</div>
+									</div>
+									<div class="material span2">
+										<div class="icon disabled tetra" data-material="3"></div>
+										<div class="label">Tetra-Brik</div>
+									</div>
+									<div class="material span2">
+										<div class="icon disabled carton" data-material="4"></div>
+										<div class="label">Cartón y papel</div>
+									</div>
+									<div class="material span2">
+										<div class="icon disabled metales" data-material="5"></div>
+										<div class="label">Metales</div>
+									</div>
+									<div class="material span2">
+										<div class="icon disabled bronce" data-material="6"></div>
+										<div class="label">Llaves de bronce</div>
+									</div>
+									<div class="material span2">
+										<div class="icon disabled vidrio" data-material="7"></div>
+										<div class="label">Vidrio</div>
+									</div>
+									<div class="material span2">
+										<div class="icon disabled neumaticos" data-material="8"></div>
+										<div class="label">Neumáticos</div>
+									</div>
+									<div class="material span2">
+										<div class="icon disabled ropa" data-material="9"></div>
+										<div class="label">Ropa</div>
+									</div>
+									<div class="material span2">
+										<div class="icon disabled electronico" data-material="10"></div>
+										<div class="label">Electrónicos</div>
+									</div>
+									<div class="material span2">
+										<div class="icon disabled aceite" data-material="11"></div>
+										<div class="label">Aceite</div>
+									</div>
+									<div class="material span2">
+										<div class="icon disabled organico" data-material="12"></div>
+										<div class="label">Orgánicos</div>
+									</div>
+									<div class="material span2">
+										<div class="icon disabled recargables" data-material="13"></div>
+										<div class="label">Baterías recargables</div>
+									</div>
+									<div class="material span2">
+										<div class="icon disabled pilas" data-material="14"></div>
+										<div class="label">Pilas</div>
+									</div>
+									<div class="material span2">
+										<div class="icon disabled otros" data-material="15"></div>
+										<div class="label">Otros</div>
+									</div>
 								</div>
-								<div class="material span2">
-									<div class="icon plastico"></div>
-									<div class="label">aa</div>
-								</div>
-								<div class="material span2">
-									<div class="icon plastico"></div>
-									<div class="label">aa</div>
-								</div>
-								<div class="material span2">
-									<div class="icon plastico"></div>
-									<div class="label">aa</div>
-								</div>
-								<div class="material span2">
-									<div class="icon plastico"></div>
-									<div class="label">aa</div>
-								</div>
-								<div class="material span2">
-									<div class="icon plastico"></div>
-									<div class="label">aa</div>
-								</div>
-								<div class="material span2">
-									<div class="icon plastico"></div>
-									<div class="label">aa</div>
-								</div>
-								<div class="material span2">
-									<div class="icon plastico"></div>
-									<div class="label">aa</div>
-								</div>
-								<div class="material span2">
-									<div class="icon plastico"></div>
-									<div class="label">aa</div>
-								</div>
-								<div class="material span2">
-									<div class="icon plastico"></div>
-									<div class="label">aa</div>
-								</div>
-								<div class="material span2">
-									<div class="icon plastico"></div>
-									<div class="label">aa</div>
-								</div>
-							</div>
-						    <button type="submit" class="btn">Submit</button>
-					  	</fieldset>
-					</form>
-				</div>
-				<div class="formContainer">
-					<form id="registerStep2" class="registrationFormModal">
-			    		<fieldset>
-						    <label>Ingresa tu direccion: </label>
-							<input id="address" type="text"/>
-						    <button type="submit" class="btn">Submit</button>
-					  	</fieldset>
-					</form>
-				    <div id="map-registration" style=" height:300px; width:100%; display:none;"></div>
-				</div>
-				<div class="formContainer step3">
-					<h1>FIESTA</h1>
-				</div>
+						  	</fieldset>
+						<button type="button" data-step="2" class="btn btn-success step">Siguiente</button>
+					</div>
+					<div class="formContainer step2">
+				    		<fieldset>
+							    <label>Ingresa tu direccion: </label>
+								<input id="address" type="text"/>
+						  	</fieldset>
+					    <div id="map-registration" style=" height:300px; width:100%; display:none;"></div>
+						<button type="button" data-step="2" class="btn btn-danger step">Anterior</button>
+						<button type="button" data-step="3" class="btn btn-success step">Siguiente</button>
+					</div>
+					<div class="formContainer step3">
+						<h1>¡Ya estás registrado y tenemos los datos necesarios para empezar a reciclar!</h1>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -90,12 +105,13 @@ YORECICLO.Register.initRegistration();
 $(".icon").click(function(){
 YORECICLO.Maps.initRegitrationMap();
 
-	alert($(this).attr('data-material'));
 	if(!$(this).hasClass('disabled')){
 		$(this).addClass("disabled");
+		$(this).next().removeClass("label-success");
 	}
 	else{
 		$(this).removeClass("disabled");
+		$(this).next().addClass("label-success");
 	}
 });
 </script>
