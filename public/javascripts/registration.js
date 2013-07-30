@@ -36,30 +36,32 @@ YORECICLO.Register = (function () {
 		successRegistration: function (){
 			//console.log(profileData);
 		},
-		subMission: function (elem,fullProfile,event){
-			var formContainer = $(elem).parent();
-			$(formContainer).hide();
+		subMission: function (event){
 			if(!fullProfile) {
-				if($(elem).attr("id") == "registerStep1") {
-					profileData.items = $('#chooseMaterial').val();
-				}
-				else if ($(elem).attr("id") == "registerStep2"){
-					profileData.items =[];
-					$(".disabled").each(function(){
-						console.log($(this).attr('data-material'));
-						profileData.items.push($(this).attr('data-material'));
-					});
-					
-					profileData.address = this.mapCoordenates;
-					profileData.coopIds= this.idCooperativas;
-					profileData.addressText=$("#address").val();
-					YORECICLO.Utils.doRequest(requestUrl,profileData,YORECICLO.Register.successRegistration)
-					}
-				}
-			$(formContainer).next().show();
+				profileData.items =[];
+				$(".disabled").each(function(){
+					profileData.items.push($(this).attr('data-material'));
+				});
+				profileData.address = this.mapCoordenates;
+				profileData.coopIds= this.idCooperativas;
+				profileData.addressText=$("#address").val();
+				YORECICLO.Utils.doRequest(requestUrl,profileData,YORECICLO.Register.successRegistration)
+			}
 		},
 		initRegistration: function (){
 			$(".formContainer").first().show();
+			$(".btn.step").on("click",function(event){
+				var step = $(event.target).attr("data-step");
+				if (parseInt(step) == 3) {
+					YORECICLO.Register.subMission()
+				}
+				$(".formContainer").hide(1,function(){
+					$(".step"+step).show(400);
+				});
+				
+
+
+			})
 			$('.registrationFormModal').submit(function(event){
 				event.preventDefault();
 				YORECICLO.Register.subMission(this);

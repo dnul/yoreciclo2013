@@ -47,20 +47,24 @@ create sequence token_action_seq;
 
 create sequence YRUser_seq;
 
-alter table linked_account add constraint fk_linked_account_user_1 foreign key (user_id) references YRUser (id);
+alter table linked_account add constraint fk_linked_account_user_1 foreign key (user_id) references YRUser (id) on delete restrict on update restrict;
 create index ix_linked_account_user_1 on linked_account (user_id);
-alter table token_action add constraint fk_token_action_targetUser_2 foreign key (target_user_id) references YRUser (id);
+alter table token_action add constraint fk_token_action_targetUser_2 foreign key (target_user_id) references YRUser (id) on delete restrict on update restrict;
 create index ix_token_action_targetUser_2 on token_action (target_user_id);
 
 
 
 # --- !Downs
 
-drop table if exists linked_account cascade;
+SET REFERENTIAL_INTEGRITY FALSE;
 
-drop table if exists token_action cascade;
+drop table if exists linked_account;
 
-drop table if exists YRUser cascade;
+drop table if exists token_action;
+
+drop table if exists YRUser;
+
+SET REFERENTIAL_INTEGRITY TRUE;
 
 drop sequence if exists linked_account_seq;
 

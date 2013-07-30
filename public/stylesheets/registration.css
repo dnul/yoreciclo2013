@@ -11,25 +11,86 @@
 	display: block;
 }
 
-#registration .formContainer.step1 {
-	display: block;
+#registration .formContainer {
+	display: none;
 }
 #registration .material {
 	text-align: center;
+	height: 140px;
 }
 #registration .material .icon {
 	width: 76px;
 	height: 76px;
+	margin-bottom: 15px;
 	margin:0 auto;
 	cursor: pointer;
+	background-size: 76px 76px;
+	border: 1px solid #000;
 }
 
 #registration .material .icon.plastico{
 	background: url("../images/icon-plastico.jpg")scroll no-repeat 0 0 transparent;
 	background-size: 76px 76px;
 }
-#registration .material .icon.plastico.disabled{
+#registration .material .icon.tapitas{
+	background: url("../images/icon-tapitas.jpg")scroll no-repeat 0 0 transparent;
+	background-size: 76px 76px;
+}
+#registration .material .icon.tetra{
+	background: url("../images/icon-tetra-brik.jpg")scroll no-repeat 0 0 transparent;
+	background-size: 76px 76px;
+}
+#registration .material .icon.carton{
+	background: url("../images/icon-carton-papel.jpg")scroll no-repeat 0 0 transparent;
+	background-size: 76px 76px;
+}
+#registration .material .icon.metales{
+	background: url("../images/icon-aluminio.jpg")scroll no-repeat 0 0 transparent;
+	background-size: 76px 76px;
+}
+#registration .material .icon.bronce{
+	background: url("../images/icon-bronce.jpg")scroll no-repeat 0 0 transparent;
+	background-size: 76px 76px;
+}
+#registration .material .icon.vidrio{
+	background: url("../images/icon-vidrio.jpg")scroll no-repeat 0 0 transparent;
+	background-size: 76px 76px;
+}
+#registration .material .icon.neumaticos{
+	background: url("../images/icon-neumaticos.jpg")scroll no-repeat 0 0 transparent;
+	background-size: 76px 76px;
+}
+#registration .material .icon.ropa{
+	background: url("../images/icon-ropa.jpg")scroll no-repeat 0 0 transparent;
+	background-size: 76px 76px;
+}
+#registration .material .icon.electronico{
+	background: url("../images/icon-raee.jpg")scroll no-repeat 0 0 transparent;
+	background-size: 76px 76px;
+}
+#registration .material .icon.aceite{
+	background: url("../images/icon-aceite.jpg")scroll no-repeat 0 0 transparent;
+	background-size: 76px 76px;
+}
+#registration .material .icon.organico{
+	background: url("../images/icon-organico.jpg")scroll no-repeat 0 0 transparent;
+	background-size: 76px 76px;
+}
+#registration .material .icon.recargables{
+	background: url("../images/icon-recargables.jpg")scroll no-repeat 0 0 transparent;
+	background-size: 76px 76px;
+}
+#registration .material .icon.pilas{
+	background: url("../images/icon-pilas.jpg")scroll no-repeat 0 0 transparent;
+	background-size: 76px 76px;
+}
+#registration .material .icon.otros{
+	background: url("../images/icon-otros.jpg")scroll no-repeat 0 0 transparent;
+	background-size: 76px 76px;
+}
+#registration .material .icon.disabled{
 	opacity: 0.4;
+	border: 1px solid #CCC;
 }
 #registration .material .label{
 	margin: 0px auto;
