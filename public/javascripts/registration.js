@@ -17,24 +17,25 @@ YORECICLO.Home = (function (){
 
 	return {
 	init: function (){
-//		$('.facebook-btn').click(function (){
-//			YORECICLO.Register.initRegistration();
-//		});
+// $('.facebook-btn').click(function (){
+// YORECICLO.Register.initRegistration();
+// });
 	}
 	}
 })();
 
 YORECICLO.Register = (function () {
 	// private scope
-	//set to false until further backend development and completed profile info is sent to view
+	// set to false until further backend development and completed profile info
+	// is sent to view
 	var fullProfile = false;
 	var profileData = {};
 	var requestUrl = "/signup";
 	var app = {};
 	return {
-		//public scope
+		// public scope
 		successRegistration: function (){
-			//console.log(profileData);
+			// console.log(profileData);
 		},
 		subMission: function (event){
 			if(!fullProfile) {
@@ -53,10 +54,24 @@ YORECICLO.Register = (function () {
 			$(".btn.step").on("click",function(event){
 				var step = $(event.target).attr("data-step");
 				if (parseInt(step) == 3) {
-					YORECICLO.Register.subMission()
+					YORECICLO.Register.subMission();
+					for(var i=0;i<profileData.coopIds.length;i++){
+						var id=profileData.coopIds[i];
+						
+						var coop=cooperativas.data.filter(function(d){
+							return id==d.id;
+						})[0];
+						
+						$('#coops_local').append("<p>" + coop.nombre +"</p>");
+					}
+					
 				}
 				$(".formContainer").hide(1,function(){
-					$(".step"+step).show(400);
+					$(".step"+step).show(400,function(){
+						if(step==2){
+							YORECICLO.Maps.initRegitrationMap();
+						}
+					});
 				});
 				
 
@@ -67,7 +82,7 @@ YORECICLO.Register = (function () {
 				YORECICLO.Register.subMission(this);
 			})
 			if(!fullProfile) {
-				//$('#registration').modal('show');
+				// $('#registration').modal('show');
 			}
 		},
 		getCooperativas: function(coords){
@@ -91,8 +106,13 @@ YORECICLO.Maps = (function (){
 	return{
 			app : {},
 			initializeMap : function (destination) {
+				if(this.app.map){
+					return;
+				}
+				console.log('initializeMap');
+				var center = new google.maps.LatLng(-34.602128,-58.430895);
 				var mapOptions = {
-					center : new google.maps.LatLng(-34.602128,-58.430895),
+					center : center,
 					zoom : 10,
 					mapTypeId : google.maps.MapTypeId.ROADMAP
 				};
@@ -100,6 +120,34 @@ YORECICLO.Maps = (function (){
 						mapOptions);
 				
 				this.app.map=map;
+
+				YORECICLO.Maps.app.map.setCenter(center);
+				YORECICLO.Maps.app.map.setZoom(15);
+				
+				google.maps.event.addListener(map, "click", function(event) {
+				    if(YORECICLO.Maps.app.marker) {
+				    	YORECICLO.Maps.app.marker.setMap(null);
+				    }
+
+				    YORECICLO.Maps.app.marker = new google.maps.Marker({
+				        position: event.latLng,
+				        map: YORECICLO.Maps.app.map,
+				        draggable:true,
+				        title: "ubicacion"
+				    });
+				    
+				    google.maps.event.addListener(
+				    		YORECICLO.Maps.app.marker,
+						    'drag',
+						    function() {
+						        var lat=YORECICLO.Maps.app.marker.position.lat();
+						        var lng=YORECICLO.Maps.app.marker.position.lng();
+						        YORECICLO.Register.mapCoordenates = ([lat,lng]);
+						        YORECICLO.Maps.updateCooperativas([lat,lng]);
+						    }
+						);
+					
+				});
 			},
 			
 			initRegitrationMap: function () {
@@ -110,7 +158,7 @@ YORECICLO.Maps = (function (){
 	       				$('#address').val('').focus();
 	       			},
 	       			afterSelection: function(option) {
-	       				//console.log('Se seleccionó la opción: '+option);
+	       				// console.log('Se seleccionó la opción: '+option);
 	       			},
 					afterGeoCoding : function(pt) {
 						if (pt instanceof usig.Punto) {
@@ -121,32 +169,50 @@ YORECICLO.Maps = (function (){
 								dataType: 'jsonp',
 								success : function(d) {
 									var myLatlng = new google.maps.LatLng(d.resultado.y,d.resultado.x);
-									//myLatlng = new google.maps.LatLng(-34.602128,-58.430895);
-									$("#map-registration").show();
-									YORECICLO.Maps.initializeMap("map-registration");
-									var marker = new google.maps.Marker({
+									if(YORECICLO.Maps.app.marker){
+										YORECICLO.Maps.app.marker.setMap(null);
+									}
+									
+									YORECICLO.Maps.app.marker = new google.maps.Marker({
 									      position: myLatlng,
-									      map: YORECICLO.Maps.app.map,
-									      title: 'ubicación'
+									      draggable:true
 									  });
-									YORECICLO.Maps.app.map.setCenter(marker.getPosition());
-									YORECICLO.Maps.app.map.setZoom(15);
+									
+									google.maps.event.addListener(
+											YORECICLO.Maps.app.marker,
+										    'drag',
+										    function() {
+										        var lat=YORECICLO.Maps.app.marker.position.lat();
+										        var lng=YORECICLO.Maps.app.marker.position.lng();
+										        YORECICLO.Register.mapCoordenates = ([lat,lng]);
+										        YORECICLO.Maps.updateCooperativas([lat,lng]);
+										    }
+										);
+									
+									YORECICLO.Maps.app.marker.setMap(YORECICLO.Maps.app.map);
+									YORECICLO.Maps.app.map.setCenter(YORECICLO.Maps.app.marker.getPosition());
 									YORECICLO.Register.mapCoordenates = ([d.resultado.y,d.resultado.x]);
-									var coopIds=YORECICLO.Register.getCooperativas([d.resultado.y,d.resultado.x]).map(function(a){
-										return a.id;
-									});
-									YORECICLO.Register.idCooperativas=coopIds; 									
+									YORECICLO.Maps.updateCooperativas(d.resultado.y,d.resultado.x);
 								},
 								error : null
 							});
 						}
 					}
 				});
-			ac.addSuggester('Catastro', {
-				inputPause : 200,
-				minTextLength : 1,
-				showError : false
-			});
+				ac.addSuggester('Catastro', {
+					inputPause : 200,
+					minTextLength : 1,
+					showError : false
+				});
+				
+				$("#map-registration").show();
+				YORECICLO.Maps.initializeMap("map-registration");
+			},
+			updateCooperativas:function(lat,Lng){
+				var coopIds=YORECICLO.Register.getCooperativas([lat,Lng]).map(function(a){
+					return a.id;
+				});
+				YORECICLO.Register.idCooperativas=coopIds; 
 			}
 	}
 

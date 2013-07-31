@@ -29,7 +29,10 @@ public class Registration extends Controller {
         
         localUser.lat=coords[0];
         localUser.lon=coords[1];
-        localUser.coopIds= coopsJson.toString();
+        if(coopsJson!=null){
+        	localUser.coopIds= coopsJson.toString();
+        }
+        
         
         localUser.address=address;
         if(itemsJson!=null)

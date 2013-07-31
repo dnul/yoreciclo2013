@@ -81,15 +81,17 @@
 					</div>
 					<div class="formContainer step2">
 				    		<fieldset>
-							    <label>Ingresa tu direccion: </label>
+							    <label>Ingresa tu dirección o marca en el mapa tu ubicación(a nivel cuadra)</label>
 								<input id="address" type="text"/>
 						  	</fieldset>
-					    <div id="map-registration" style=" height:300px; width:100%; display:none;"></div>
+					    <div id="map-registration" class="map" style=" height:300px; width:100%;"></div>
 						<button type="button" data-step="2" class="btn btn-danger step">Anterior</button>
 						<button type="button" data-step="3" class="btn btn-success step">Siguiente</button>
 					</div>
 					<div class="formContainer step3">
-						<h1>¡Ya estás registrado y tenemos los datos necesarios para empezar a reciclar!</h1>
+						<h1>¡Gracias por registrate! Estas son las cooperativas que operan por tu zona</h1>
+						<div id="coops_local"></div>
+						<div><a href="/">Fijate quienes de tus vecinos tambien separan</a></div>
 					</div>
 				</form>
 			</div>
@@ -103,8 +105,8 @@ cooperativas.init();
 YORECICLO.Register.initRegistration();	
 
 $(".icon").click(function(){
-YORECICLO.Maps.initRegitrationMap();
 
+	console.log(YORECICLO.Register.idCooperativas);
 	if(!$(this).hasClass('disabled')){
 		$(this).addClass("disabled");
 		$(this).next().removeClass("label-success");
