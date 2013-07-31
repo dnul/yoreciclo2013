@@ -4,6 +4,7 @@ function initialize() {
 	var mapOptions = {
 		center : new google.maps.LatLng(-34.602128, -58.430895),
 		zoom : 12,
+		disableDefaultUI: true,
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	};
 	var map = new google.maps.Map(document.getElementById("map-canvas"),
@@ -14,7 +15,6 @@ function initialize() {
 	app.trails = [];
 
 	$.getJSON("/assets/coperativas_dondereciclo.json", function(zonas) {
-		console.log('hola');
 		for ( var i in zonas) {
 			color =zonas[i].color;
 			console.log(color);
@@ -39,8 +39,6 @@ function initialize() {
 			  for(var i=0;i<data.length;i++){
 				  var user=data[i];						  
 				  var point=new google.maps.LatLng(user.lat,user.lon);
-				  
-//				  var marker = new google.maps.Marker({map: app.map, position: point, clickable: true});
 				  
 				  var marker = new google.maps.Marker({
 				      position: point,

@@ -13,6 +13,11 @@ height: 100%;
 #footer {
 	background-color: #02BEF3;
 }
+
+#footer p {
+	color: #555;
+}
+
 #wrap > .container {
 }
 
@@ -86,11 +91,12 @@ box-shadow: 0 3px 8px rgba(0, 0, 0, 0.125);
 }
 .home .map {
 	margin-left: 0px;
+	background-color: #f1f1f1;
 }
 .home .sidebar .boxesContainer {
-	background-color: #cccccc;
+	background-color: #F1F1F1;
 	width: 198px;
-	height: auto;
+	height: 590px;
 	margin: 10px auto;
 	padding: 10px;
 }
@@ -101,6 +107,20 @@ box-shadow: 0 3px 8px rgba(0, 0, 0, 0.125);
 	background-color: #FFF;
 }
 
+.home .mapIntro{
+	background-color: #F1F1F1;
+	height: auto;
+	margin-left: 10;
+}
+
+.home .mapIntro h4{
+	color: #555;
+	height: auto;
+	margin-left: 10;
+	width:90%;
+}
 .map img {
     max-width: none;
 }
+
+
