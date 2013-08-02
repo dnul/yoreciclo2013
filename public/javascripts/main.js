@@ -37,22 +37,26 @@ function initialize() {
 		  success: function(data){
 			  console.log(data);
 			  for(var i=0;i<data.length;i++){
-				  var user=data[i];						  
+				  var user=data[i];
+				  console.log(user);
 				  var point=new google.maps.LatLng(user.lat,user.lon);
 				  
 				  var marker = new google.maps.Marker({
 				      position: point,
 				      map: app.map,
-				      title: 'ubicación'
+				      title: 'ubicación',
+				      infoWindowIndex : i,
+				      content:  '<p><b>' + user.name + '</b></p>'  + '<p>Junta:' +  user.recycledItems + '</p><p><img src="http://graph.facebook.com/' + user.facebookId + '/picture" ><p>'
 				  });
 				  
 				  var contentHtml = '<p><b>' + user.name + '</b></p>'  + '<p>Junta:' +  user.recycledItems + '</p><p><img src="http://graph.facebook.com/' + user.facebookId + '/picture" ><p>';
-				  marker.info = new google.maps.InfoWindow({
+				  var infoWindow = new google.maps.InfoWindow({
 					    content: contentHtml
 					  });
 				
 				  google.maps.event.addListener(marker, 'click', function() {
-					    marker.info.open(app.map, marker);
+					  	infoWindow.setContent(this.content);
+					    infoWindow.open(app.map, this);
 					  });
 			  }
 			  

@@ -54,7 +54,7 @@ public class Application extends Controller {
 			newObject.put("recycledItems", u.recycledItems);
 			newObject.put("name", u.name);
 			newObject.put("facebookId",
-					all.get(0).linkedAccounts.get(0).providerUserId);
+					u.linkedAccounts.get(0).providerUserId);
 			arrayNode.add(newObject);
 			newObject.put("lat", u.lat);
 			newObject.put("lon", u.lon);
