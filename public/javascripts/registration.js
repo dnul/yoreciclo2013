@@ -146,7 +146,7 @@ YORECICLO.Maps = (function (){
 						        YORECICLO.Maps.updateCooperativas([lat,lng]);
 						    }
 						);
-					
+			        YORECICLO.Maps.updateCooperativas(event.latLng.lat(),event.latLng.lng());
 				});
 			},
 			
@@ -185,7 +185,7 @@ YORECICLO.Maps = (function (){
 										        var lat=YORECICLO.Maps.app.marker.position.lat();
 										        var lng=YORECICLO.Maps.app.marker.position.lng();
 										        YORECICLO.Register.mapCoordenates = ([lat,lng]);
-										        YORECICLO.Maps.updateCooperativas([lat,lng]);
+										        YORECICLO.Maps.updateCooperativas(lat,lng);
 										    }
 										);
 									
