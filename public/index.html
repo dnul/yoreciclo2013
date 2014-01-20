@@ -33,7 +33,7 @@
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   <!-- Brand and toggle get grouped for better mobile display -->
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -54,27 +54,37 @@
       <li><a href="#">¿Quienes somos?</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
+      <li><img class="navbar-login-fb" src="images/facebook-login.png"></li>
       <li><a href="#">Link</a></li>
     </ul>
   </div><!-- /.navbar-collapse -->
 </nav>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
+    <div class="jumbotron jumbo-title">
       <div class="container">
         <img src="images/yrlogo.png">
         
         <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+      
+      
+        <div class="row">
+          <div class="wizard">
+              <div class="col-lg-12">
+              <a><span class="badge">1</span> Ingresa con Facebook</a>
+              <a><span class="badge">2</span> Indica tu ubicación</a>
+              <a><span class="badge">3</span> Marca los materiales que separas</a>
+              </div>
+          </div>
+        </div>
+     
+
       </div>
-
     </div>
 
-    <div class="container">
-      <div class="row">
-              <div id="map-canvas" style=" height:570px; width:100%; margin-bottom:20px;"></div>
-      </div>        
-    </div>
+    <div id="map-canvas" style=" height:300px; width:100%; margin-bottom:20px;"></div>
 
+      
     <div class="container">
       <!-- Example row of columns -->
       <div class="row">
@@ -94,10 +104,23 @@
           <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
         </div>
       </div>
-
-
-
     </div> <!-- /container -->       
+
+
+    <div class="container">
+      <div class="row">
+            <div class="col-lg-6">
+            <h2>Heading</h2>
+            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+            <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
+            </div>
+            <div class="col-lg-6">
+            <h2>Heading</h2>
+            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+            <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
+            </div>
+      </div>
+    </div>
 
       <div class="container container-social">
       <div class="row social-feed"><span></span></div>
@@ -143,32 +166,21 @@
             function initialize() {
               var mapOptions = {
               center : new google.maps.LatLng(-34.602128,-58.430895),
-              zoom : 12,
-              mapTypeId : google.maps.MapTypeId.ROADMAP
+              zoom : 13,
+              mapTypeId : google.maps.MapTypeId.ROADMAP,
+              panControl: false,
+              zoomControl: true,
+              mapTypeControl: false,
+              scaleControl: false,
+              streetViewControl: false,
+              overviewMapControl: false
+
+
             };
             var map = new google.maps.Map(document.getElementById("map-canvas"),
               mapOptions);
         
             app.map=map;
-            var layer = new google.maps.FusionTablesLayer({
-                  query: {
-                    select: 'location',
-                    from: '118cbZRCvb78ebldQprexrXYNUePEc8ezKmef4Bo'
-                  },
-                  options: {
-                    suppressInfoWindows: true
-                  },
-                  styles: [{
-                      polygonOptions: {
-                        fillColor: '#00FF00',
-                        fillOpacity: 1.0,
-                        strokeWeight: 0.5,
-                        strokeOpacity:0.5 
-                      }
-                    }],
-                  map: app.map
-                });
-              layer.setMap(app.map);
             }
             google.maps.event.addDomListener(window, 'load', initialize);
 
