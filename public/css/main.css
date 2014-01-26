@@ -67,10 +67,27 @@
 }
 
 
+.container-yoreciclocontent{
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
 
+.container-social{
+	background-color: #069BAF;
+}
 
+body > footer {
+	background-color: #343434;
+	height: 100px;
+	color: #fff;
+}
+
+body > footer a:link{
+	color:#fff;
+}
 .social-feed{
 	margin-top:90px;
+	background-color: #FFF;
 }
 
 .navbar-login-fb{
