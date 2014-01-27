@@ -15,7 +15,7 @@ import play.mvc.Result;
 import views.html.docHead;
 import views.html.footer;
 import views.html.header;
-import views.html.index;
+import views.html.indexbootstrap;
 import views.html.maps;
 import views.html.mapsHome;
 import views.html.registration;
@@ -30,7 +30,7 @@ public class Application extends Controller {
     	AuthUser user = PlayAuthenticate.getUser(session());
     	User appUser = User.findByAuthUserIdentity(user);
     	
-        return ok(index.render("Your new application is ready.",appUser));
+        return ok(indexbootstrap.render(appUser));
     }
     
     public static Result oAuthDenied(final String providerKey) {
@@ -64,7 +64,17 @@ public class Application extends Controller {
 	
 
 	public static Result registration() {
-	    return ok(registration.render());
+		AuthUser user = PlayAuthenticate.getUser(session());
+    	User appUser = User.findByAuthUserIdentity(user);
+    	
+        return ok(indexbootstrap.render(appUser));
+	}
+	
+	public static Result registrationOld() {
+		AuthUser user = PlayAuthenticate.getUser(session());
+    	User appUser = User.findByAuthUserIdentity(user);
+    	
+        return ok(registration.render());
 	}
 
     public static Result header() {

@@ -12,6 +12,7 @@ GET     /header     controllers.Application.header()
 GET     /footer     controllers.Application.footer()
 GET     /docHead     controllers.Application.docHead()
 GET		/registerMaps controllers.Application.maps()
+GET		/registrationOld	controllers.Application.registrationOld()
 GET		/mapsHome controllers.Application.mapsHome()
 GET		/registeredUsers 			controllers.Application.registeredUsers()
 

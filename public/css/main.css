@@ -76,6 +76,14 @@
 	background-color: #069BAF;
 }
 
+.container-location{
+	background-color: #EEE;
+}
+
+.donestep{
+	color: #B3B0B0;
+}
+
 body > footer {
 	background-color: #343434;
 	height: 100px;
@@ -96,7 +104,7 @@ body > footer a:link{
 	margin-top:5px;
 }
 .jumbotron.jumbo-title{
-	margin-bottom: 5px;
+	margin-bottom: 0px;
 	margin-top: 0px
 }
 
