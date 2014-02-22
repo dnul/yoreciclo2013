@@ -5,45 +5,68 @@
 var controllers = angular.module('yoreciclo.controllers', []);
 
 // Search Controller
-controllers.controller('mainController', ['$scope', '$rootScope','$location', function($scope, $rootScope,$location) {
-	$scope.initialize = function() {
-				var mapOptions = {
-					center : new google.maps.LatLng(-34.602128, -58.430895),
-					zoom : 13,
-					mapTypeId : google.maps.MapTypeId.ROADMAP,
-					panControl : false,
-					zoomControl : true,
-					mapTypeControl : false,
-					scaleControl : false,
-					streetViewControl : false,
-					overviewMapControl : false
+controllers.controller('mapController', ['$scope', '$rootScope','$location', function($scope, $rootScope,$location) {
+	console.log('mapController');
+	$scope.initializeMap = function (destination) {
+		if($scope.map){
+			return;
+		}
+		console.log('initializeMap');
+		var center = new google.maps.LatLng(-34.602128,-58.430895);
+		var mapOptions = {
+				center : new google.maps.LatLng(-34.602128, -58.430895),
+				zoom : 13,
+				mapTypeId : google.maps.MapTypeId.ROADMAP,
+				panControl : false,
+				zoomControl : true,
+				mapTypeControl : false,
+				scaleControl : false,
+				streetViewControl : false,
+				overviewMapControl : false,
+				scrollwheel:false
+			};
+		var map = new google.maps.Map(document.getElementById(destination),
+				mapOptions);
+		
+		$scope.map=map;
 
-				};
-				var map = new google.maps.Map(document
-						.getElementById("map-canvas"), mapOptions);
-			}
+		map.setCenter(center);
+		map.setZoom(15);
+		
+		google.maps.event.addListener(map, "click", function(event) {
+		    if($scope.marker) {
+		    	$scope.marker.setMap(null);
+		    }
+
+		    $scope.marker = new google.maps.Marker({
+		        position: event.latLng,
+		        map: map,
+		        draggable:true,
+		        title: "ubicacion"
+		    });
+		    
+		    google.maps.event.addListener(
+		    		$scope.marker,
+				    'drag',
+				    function() {
+				        var lat=$scope.marker.position.lat();
+				        var lng=$scope.marker.position.lng();
+				        $scope.mapCoordenates = ([lat,lng]);
+				    }
+				);
+		    
+		    $scope.mapCoordenates = event.latLng;
+		    console.log($scope.mapCoordenates);
+		});
+	}
+	
+	$scope.initializeMap('home-map')
 }])
 
-controllers.controller('homeController', ['$scope', '$rootScope','$location', function($scope, $rootScope,$location) {
-	
-	$scope.initialize = function() {
-				var mapOptions = {
-					center : new google.maps.LatLng(-34.602128, -58.430895),
-					zoom : 13,
-					mapTypeId : google.maps.MapTypeId.ROADMAP,
-					panControl : false,
-					zoomControl : true,
-					mapTypeControl : false,
-					scaleControl : false,
-					streetViewControl : false,
-					overviewMapControl : false
 
-				};
-				var map = new google.maps.Map(document
-						.getElementById("map-canvas"), mapOptions);
-			}
-	
-	$scope.initialize();
+
+controllers.controller('homeController', ['$scope', '$rootScope','$location', function($scope, $rootScope,$location) {
+	console.log('homeController');
 }])
 
 controllers.controller('locationController', ['$scope', '$rootScope','$location', function($scope, $rootScope,$location) {
@@ -94,7 +117,6 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 							$scope.marker.setMap($scope.map);
 							$scope.map.setCenter($scope.marker.getPosition());
 							$scope.mapCoordenates = ([d.resultado.y,d.resultado.x]);
-							console.log($scope.mapCoordenates);
 						},
 						error : null
 					});
@@ -123,8 +145,8 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 				mapTypeControl : false,
 				scaleControl : false,
 				streetViewControl : false,
-				overviewMapControl : false
-
+				overviewMapControl : false,
+				scrollwheel:false
 			};
 		var map = new google.maps.Map(document.getElementById(destination),
 				mapOptions);
