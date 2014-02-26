@@ -172,6 +172,14 @@ body > footer a:link{
 }
 
 
+.glyphicon-grey  {
+	opacity:0.1;
+}
+
+.glyphicon-ok-sign:hover {
+	font-size:2.5em;
+	color:#2A6496;
+}
 
 
 

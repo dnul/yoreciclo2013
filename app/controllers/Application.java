@@ -4,6 +4,7 @@ import java.util.List;
 
 import models.User;
 
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
@@ -68,6 +69,19 @@ public class Application extends Controller {
     	User appUser = User.findByAuthUserIdentity(user);
     	
         return ok(indexbootstrap.render(appUser));
+	}
+	
+	public static Result submitAddress(){
+		JsonNode asJson = request().body().asJson();
+		AuthUser user = PlayAuthenticate.getUser(session());
+		final User localUser = User.findByAuthUserIdentity(user);
+		ArrayNode array = (ArrayNode) asJson;
+		String lat= array.get(0).asText();
+		String lng= array.get(1).asText();
+		localUser.lat=lat;
+		localUser.lon=lng;
+		localUser.save();
+		return ok();
 	}
 	
 	public static Result registrationOld() {

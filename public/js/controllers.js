@@ -33,31 +33,6 @@ controllers.controller('mapController', ['$scope', '$rootScope','$location', fun
 		map.setCenter(center);
 		map.setZoom(15);
 		
-		google.maps.event.addListener(map, "click", function(event) {
-		    if($scope.marker) {
-		    	$scope.marker.setMap(null);
-		    }
-
-		    $scope.marker = new google.maps.Marker({
-		        position: event.latLng,
-		        map: map,
-		        draggable:true,
-		        title: "ubicacion"
-		    });
-		    
-		    google.maps.event.addListener(
-		    		$scope.marker,
-				    'drag',
-				    function() {
-				        var lat=$scope.marker.position.lat();
-				        var lng=$scope.marker.position.lng();
-				        $scope.mapCoordenates = ([lat,lng]);
-				    }
-				);
-		    
-		    $scope.mapCoordenates = event.latLng;
-		    console.log($scope.mapCoordenates);
-		});
 	}
 	
 	$scope.initializeMap('home-map')
@@ -69,18 +44,17 @@ controllers.controller('homeController', ['$scope', '$rootScope','$location', fu
 	console.log('homeController');
 }])
 
-controllers.controller('locationController', ['$scope', '$rootScope','$location', function($scope, $rootScope,$location) {
+controllers.controller('locationController', ['$scope', '$rootScope','$location','$http', function($scope, $rootScope,$location,$http) {
 	
 	console.log('location controller');
 	$rootScope.ac=null;
+	$rootScope.marker=null;
 	$scope.initGcba = function() {
 		var ac = new usig.AutoCompleter('address', {
    			rootUrl: 'http://servicios.usig.buenosaires.gob.ar/usig-js/3.0/',
    			skin: 'usig4',
    			onReady: function() {
-   				console.log('ready gcba');
    				$('#address').val('').focus();
-   				console.log($('#address'));
    			},
    			afterSelection: function(option) {
    				// console.log('Se seleccionó la opción: '+option);
@@ -94,29 +68,32 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 						dataType: 'jsonp',
 						success : function(d) {
 							var myLatlng = new google.maps.LatLng(d.resultado.y,d.resultado.x);
-							console.log(myLatlng);
-							if($scope.marker){
-								$scope.marker.setMap(null);
+							if($rootScope.marker){
+								$rootScope.marker.setMap(null);
+								delete $rootScope.marker;
+								delete $scope.mapCoordenates;
 							}
 							
-							$scope.marker = new google.maps.Marker({
+							$rootScope.marker = new google.maps.Marker({
 							      position: myLatlng,
 							      draggable:true
 							  });
 							
 							google.maps.event.addListener(
-									$scope.marker,
-								    'drag',
+									$rootScope.marker,
+								    'dragend',
 								    function() {
-								        var lat=$scope.marker.position.lat();
-								        var lng=$scope.marker.position.lng();
-								        $scope.mapCoordenates = ([lat,lng]);
+								        var lat=$rootScope.marker.position.lat();
+								        var lng=$rootScope.marker.position.lng();
+								        $scope.mapCoordenates = [lat,lng];
+										$scope.$apply();
 								    }
 								);
 							
-							$scope.marker.setMap($scope.map);
-							$scope.map.setCenter($scope.marker.getPosition());
-							$scope.mapCoordenates = ([d.resultado.y,d.resultado.x]);
+							$rootScope.marker.setMap($rootScope.map);
+							$rootScope.map.setCenter($rootScope.marker.getPosition());
+							$scope.mapCoordenates = [d.resultado.y,d.resultado.x];
+							$scope.$apply();
 						},
 						error : null
 					});
@@ -131,10 +108,9 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 		}
 	
 	$scope.initializeMap = function (destination) {
-		if($scope.map){
+		if($rootScope.map){
 			return;
 		}
-		console.log('initializeMap');
 		var center = new google.maps.LatLng(-34.602128,-58.430895);
 		var mapOptions = {
 				center : new google.maps.LatLng(-34.602128, -58.430895),
@@ -151,38 +127,50 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 		var map = new google.maps.Map(document.getElementById(destination),
 				mapOptions);
 		
-		$scope.map=map;
+		$rootScope.map=map;
 
 		map.setCenter(center);
 		map.setZoom(15);
 		
 		google.maps.event.addListener(map, "click", function(event) {
-		    if($scope.marker) {
-		    	$scope.marker.setMap(null);
+		    if($rootScope.marker) {
+		    	$rootScope.marker.setMap(null);
+		    	delete $rootScope.marker;
+		    	delete $scope.mapCoordenates;
 		    }
+		    console.log(event.latLng);
 
-		    $scope.marker = new google.maps.Marker({
+		    $rootScope.marker = new google.maps.Marker({
 		        position: event.latLng,
-		        map: map,
+		        map: $rootScope.map,
 		        draggable:true,
 		        title: "ubicacion"
 		    });
 		    
 		    google.maps.event.addListener(
-		    		$scope.marker,
-				    'drag',
+		    		$rootScope.marker,
+				    'dragend',
 				    function() {
-				        var lat=$scope.marker.position.lat();
-				        var lng=$scope.marker.position.lng();
+				        var lat=$rootScope.marker.position.lat();
+				        var lng=$rootScope.marker.position.lng();
 				        $scope.mapCoordenates = ([lat,lng]);
+					    $scope.$apply();
 				    }
 				);
 		    
 		    $scope.mapCoordenates = event.latLng;
 		    console.log($scope.mapCoordenates);
+		    $scope.$apply();
+		    $rootScope.$apply();
 		});
 	}
 	
-	$scope.initGcba();
+	$scope.registerLocation= function(coordenates){
+		$http.post("/submitAddress",coordenates).success(function(data){
+			console.log(data);
+		})
+	}
+	
 	$scope.initializeMap("map-registration");
+	$scope.initGcba();
 }])

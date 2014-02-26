@@ -1,4 +1,4 @@
-<div class="container-location" ng-controller="locationController">
+<div class="container-location">
 	<div class="container" style="padding-bottom: 20px;">
 		<form class="form-horizontal" name="form">
 			<fieldset>
@@ -10,8 +10,7 @@
 							placeholder="ej: pringles 1249 o Sante Fe av y Callao av">
 					</div>
 					<label class="col-lg-2 control-label">o hace click en el mapa</label>
-						<span style="font-size:1.5em;" ng-class="{disabled: 'mapCoordenates!=null'}" class="col-lg-4 glyphicon glyphicon-ok-sign"></span>
-						{{mapCoordenates}}
+						<span style="font-size:1.5em;" ng-click="registerLocation(mapCoordenates)"ng-class="{'col-lg-4':true,'glyphicon':true,'glyphicon-ok-sign':true,'glyphicon-grey': !mapCoordenates}"></span>
 				</div>
 			</fieldset>
 		</form>

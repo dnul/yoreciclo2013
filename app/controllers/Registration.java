@@ -13,6 +13,7 @@ import play.mvc.Result;
 
 public class Registration extends Controller {
 	
+	
 	public static Result signUp(){
 		Logger.info("registering");
         Map<String, String[]> map = request().body().asFormUrlEncoded();
