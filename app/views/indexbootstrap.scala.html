@@ -1,3 +1,4 @@
+
 @(user: User)
 @import com.feth.play.module.pa.views.html._
 
@@ -15,6 +16,7 @@
         <meta name="viewport" content="width=device-width">
 
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
       	
         
         <link rel="stylesheet" href="assets/css/main.css">
@@ -96,8 +98,8 @@
           <div class="wizard">
               <div class="col-lg-12">
               <a href="/#home"><span class="badge">1</span><span @if(user!=null){ class="donestep" } > Ingresa con Facebook</span></a>
-              <a href="/#location"><span class="badge">2</span> Indica tu ubicación</a>
-              <a href="/#materials"><span class="badge">3</span> Marca los materiales que separas</a>
+              <a id="step2" href="/#location"><span class="badge">2</span><span @if(user!=null && user.lat!=null){ class="donestep" }> Indica tu ubicación</span></a>
+              <a href="/#materials"><span class="badge">3</span><span @if(user!=null && user.recycledItems!=null){ class="donestep" }> Marca los materiales que separas</span></a>
               </div>
           </div>
         </div>
@@ -134,12 +136,11 @@
 
       <footer>
         <div class="row" style="padding-top:20px;">
-          <div class="col-lg-1"></div>
-          <div class="col-lg-10 col-lg-offset-5">
+        	<div class="col-lg-1"></div>
+			 <div class="col-lg-10 col-lg-offset-5">
             <img style="width:50px;"src="assets/images/yr-footer.png"/>
             <span align="center"><a href="mailto:info@@yoreciclo.com.ar">info@@yoreciclo.com.ar</a></span>
           </div>
-          <div class="col-lg-1"></div>
         </div>
         
       </footer>

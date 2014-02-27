@@ -18,7 +18,8 @@ GET		/registeredUsers 			controllers.Application.registeredUsers()
 
 #registration
 POST     /signup     controllers.Registration.signUp()
-POST	 /submitAddress	controllers.Application.submitAddress()
+POST	 /submitAddress		controllers.Application.submitAddress()
+POST	 /submitMaterials	controllers.Application.submitMaterials()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file            controllers.Assets.at(path="/public", file)

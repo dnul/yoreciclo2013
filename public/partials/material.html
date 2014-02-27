@@ -1,3 +1,45 @@
-<div class="row">
-	<p>material</p>
-</div>
+
+<div class="container" style="margin-bottom: 50px;margin-top: 50px;">
+	<div class="row">
+		<div class="col-lg-8 col-lg-offset-1">
+			<div class="material-icons" style="width =500margin: auto;">
+				<div class="col-lg-3">
+					<div ng-class="{'row':true,'text-center':true,'selected':materials.me}" ng-click="toggleMaterial('me')">
+						<i class="fa fa-wrench"></i>
+					</div>
+					<div class="row material-description" style="margin-left:-13px">
+						<p class="text-center">metal</p>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div ng-class="{'row':true,'text-center':true,'selected':materials.ca}" ng-click="toggleMaterial('ca')">
+						<i class="fa fa-archive"></i>
+					</div>
+					<div class="row material-description">
+						<p class="text-center">carton y papel</p>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div ng-class="{'row':true,'text-center':true,'selected':materials.pl}" ng-click="toggleMaterial('pl')">
+						<i class="fa fa-ticket"></i>
+					</div>
+					<div class="row material-description">
+						<p class="text-center">plastico</p>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div ng-class="{'row':true,'text-center':true,'selected':materials.vi}" ng-click="toggleMaterial('vi')">
+						<i class="fa fa-glass"></i>
+					</div>
+					<div class="row material-description">
+						<p class="text-center">vidrio</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-2 col-lg-offset-4" style="margin-top:20px;">
+			<p class="text-center"><span style="font-size:1.5em;" ng-click="registerMaterials()" ng-class="{'glyphicon':true,'glyphicon-ok-sign':true,'glyphicon-grey': materialCount==0}"></span></p>
+		</div>
+	</div>

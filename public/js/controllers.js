@@ -8,7 +8,7 @@ var controllers = angular.module('yoreciclo.controllers', []);
 controllers.controller('mapController', ['$scope', '$rootScope','$location', function($scope, $rootScope,$location) {
 	console.log('mapController');
 	$scope.initializeMap = function (destination) {
-		if($scope.map){
+		if($rootScope.map){
 			return;
 		}
 		console.log('initializeMap');
@@ -28,7 +28,7 @@ controllers.controller('mapController', ['$scope', '$rootScope','$location', fun
 		var map = new google.maps.Map(document.getElementById(destination),
 				mapOptions);
 		
-		$scope.map=map;
+		$rootScope.map=map;
 
 		map.setCenter(center);
 		map.setZoom(15);
@@ -40,8 +40,80 @@ controllers.controller('mapController', ['$scope', '$rootScope','$location', fun
 
 
 
-controllers.controller('homeController', ['$scope', '$rootScope','$location', function($scope, $rootScope,$location) {
+controllers.controller('homeController', ['$scope', '$rootScope','$location','$http', function($scope, $rootScope,$location,$http) {
 	console.log('homeController');
+	
+	$http.get('/registeredUsers').success(function(data){
+		for(var i=0;i<data.length;i++){
+			  var user=data[i];
+			  var point=new google.maps.LatLng(user.lat,user.lon);
+			  
+			  
+			  var icons=""
+			if(user.recycledItems!=null){
+				if(user.recycledItems.search('vi')!=-1){
+					icons+='<i class="fa fa-glass"></i>'
+				}
+				if(user.recycledItems.search('pl')!=-1){
+					icons+='<i class="fa fa-ticket"></i>'
+				}
+				if(user.recycledItems.search('pa')!=-1){
+					icons+='<i class="fa fa-archive"></i>'
+				}
+				if(user.recycledItems.search('me')!=-1){
+					icons+='<i class="fa fa-wrench"></i>'
+				}
+			}
+			  
+			  var marker = new google.maps.Marker({
+			      position: point,
+			      map: $rootScope.map,
+			      title: 'ubicación',
+			      infoWindowIndex : i,
+			      content:  '<p><b>' + user.name + '</b></p>'  + '<p>' +  icons + '</p><p><img src="http://graph.facebook.com/' + user.facebookId + '/picture" ><p>'
+			  });
+			  
+			  
+			  var contentHtml = '<p><b>' + user.name + '</b></p>'  + '<p>' +  icons + '</p><p><img src="http://graph.facebook.com/' + user.facebookId + '/picture" ><p>';
+			  var infoWindow = new google.maps.InfoWindow({
+				    content: contentHtml
+				  });
+			
+			  google.maps.event.addListener(marker, 'click', function() {
+				  	infoWindow.setContent(this.content);
+				    infoWindow.open($rootScope.map, this);
+				  });
+		  }
+
+	});
+}])
+
+controllers.controller('materialsController', ['$scope', '$rootScope','$location','$http', function($scope, $rootScope,$location,$http) {
+	console.log('homeController');
+	$scope.materials={};
+	$scope.materialCount=0;
+	$scope.registerMaterials= function(){
+		$http.post('/submitMaterials',$scope.materials).success(function(d){
+			console.log('submitted ok');
+			$location.path('/');
+		})
+	}
+	
+	$scope.canSubmit = function(){
+		
+	}
+	
+	$scope.toggleMaterial=function(id){
+		if($scope.materials[id]){
+			$scope.materials[id]=null;
+			$scope.materialCount-=1
+		}else{
+			$scope.materials[id]=1;
+			$scope.materialCount+=1
+		}
+		
+		console.log(id);
+	}
 }])
 
 controllers.controller('locationController', ['$scope', '$rootScope','$location','$http', function($scope, $rootScope,$location,$http) {
@@ -138,7 +210,6 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 		    	delete $rootScope.marker;
 		    	delete $scope.mapCoordenates;
 		    }
-		    console.log(event.latLng);
 
 		    $rootScope.marker = new google.maps.Marker({
 		        position: event.latLng,
@@ -158,8 +229,7 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 				    }
 				);
 		    
-		    $scope.mapCoordenates = event.latLng;
-		    console.log($scope.mapCoordenates);
+		    $scope.mapCoordenates = [event.latLng.d,event.latLng.e];
 		    $scope.$apply();
 		    $rootScope.$apply();
 		});
@@ -167,7 +237,8 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 	
 	$scope.registerLocation= function(coordenates){
 		$http.post("/submitAddress",coordenates).success(function(data){
-			console.log(data);
+			$('step2').addClass('donestep');
+			$location.path('materials');
 		})
 	}
 	

@@ -181,7 +181,33 @@ body > footer a:link{
 	color:#2A6496;
 }
 
+.material-icons {
+	font-size:2.5em;
+	letter-spacing: 4px;
+}
 
+.material-icon{
+	margin:auto;
+	margin-left: 30px;
+}
+
+.material-description{
+	font-size: 15px;
+	margin:auto;
+}
+
+.material-icons i{
+	opacity:0.3;
+}
+
+.material-icons i:hover{
+	opacity:0.9; 
+}
+
+.material-icons .selected i{
+	color:#2A6496;
+	opacity:0.9;
+}
 
 
 

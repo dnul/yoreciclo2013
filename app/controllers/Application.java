@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import models.User;
@@ -80,6 +81,31 @@ public class Application extends Controller {
 		String lng= array.get(1).asText();
 		localUser.lat=lat;
 		localUser.lon=lng;
+		localUser.save();
+		return ok();
+	}
+	
+	public static Result submitMaterials(){
+		JsonNode asJson = request().body().asJson();
+		AuthUser user = PlayAuthenticate.getUser(session());
+		final User localUser = User.findByAuthUserIdentity(user);
+		List<String> materials= new ArrayList<String>();
+		
+		JsonNode array = (JsonNode) asJson;
+		if(array.get("vi")!=null){
+			materials.add("vi");
+		}
+		if(array.get("pl")!=null){
+			materials.add("pl");
+		}
+		if(array.get("ca")!=null){
+			materials.add("ca");
+		}
+		if(array.get("me")!=null){
+			materials.add("vi");
+		}
+		
+		localUser.recycledItems=materials.toString();;
 		localUser.save();
 		return ok();
 	}

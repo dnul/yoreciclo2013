@@ -10,7 +10,7 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider
   .when('/home',{templateUrl:'assets/partials/home.html',controller:'homeController'})
   .when('/',{templateUrl:'assets/partials/home.html',controller:'homeController'})	
-  .when('/materials', {templateUrl: 'assets/partials/material.html'})
+  .when('/materials', {templateUrl: 'assets/partials/material.html',controller:'materialsController'})
   .when('/location', {templateUrl: 'assets/partials/location.html',controller:'locationController'})
   .otherwise({redirectTo: '/'});
 }]);
