@@ -15,6 +15,7 @@ GET		/registerMaps controllers.Application.maps()
 GET		/registrationOld	controllers.Application.registrationOld()
 GET		/mapsHome controllers.Application.mapsHome()
 GET		/registeredUsers 			controllers.Application.registeredUsers()
+GET		/currentUser		controllers.Application.getCurrentUser()
 
 #registration
 POST     /signup     controllers.Registration.signUp()

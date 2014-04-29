@@ -41,6 +41,12 @@ public class Application extends Controller {
         return redirect(routes.Application.index());
     }
     
+    public static Result getCurrentUser(){
+    	final AuthUser currentAuthUser = PlayAuthenticate.getUser(session());
+		final User localUser = User.findByAuthUserIdentity(currentAuthUser);
+		JsonNode json = Json.toJson(localUser);
+		return ok(json);
+    }
 	public static User getLocalUser(final Session session) {
 		final AuthUser currentAuthUser = PlayAuthenticate.getUser(session);
 		final User localUser = User.findByAuthUserIdentity(currentAuthUser);

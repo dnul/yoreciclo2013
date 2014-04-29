@@ -8,9 +8,6 @@ var controllers = angular.module('yoreciclo.controllers', []);
 controllers.controller('mapController', ['$scope', '$rootScope','$location', function($scope, $rootScope,$location) {
 	console.log('mapController');
 	$scope.initializeMap = function (destination) {
-		if($rootScope.map){
-			return;
-		}
 		console.log('initializeMap');
 		var center = new google.maps.LatLng(-34.602128,-58.430895);
 		var mapOptions = {
@@ -89,9 +86,10 @@ controllers.controller('homeController', ['$scope', '$rootScope','$location','$h
 }])
 
 controllers.controller('materialsController', ['$scope', '$rootScope','$location','$http', function($scope, $rootScope,$location,$http) {
-	console.log('homeController');
+	console.log('materialsController');
 	$scope.materials={};
 	$scope.materialCount=0;
+	$scope.selectionChanged=false;
 	$scope.registerMaterials= function(){
 		$http.post('/submitMaterials',$scope.materials).success(function(d){
 			console.log('submitted ok');
@@ -104,16 +102,30 @@ controllers.controller('materialsController', ['$scope', '$rootScope','$location
 	}
 	
 	$scope.toggleMaterial=function(id){
+		$scope.selectionChanged=true;
+		console.log(id);
 		if($scope.materials[id]){
-			$scope.materials[id]=null;
+			delete $scope.materials[id]
 			$scope.materialCount-=1
 		}else{
 			$scope.materials[id]=1;
 			$scope.materialCount+=1
 		}
 		
-		console.log(id);
 	}
+	$scope.loadCurrentMaterials = function(){
+		$http.get("/currentUser").success(function(data){
+			var items=data.recycledItems.replace('[','').replace(']','').replace(' ','').split(',')
+ 
+			for(var i=0;i<items.length;i++){
+				var id=items[i];
+				$scope.materials[id]=1;
+				$scope.materialCount+=1
+			}
+			$scope.materialCount=items.length;
+		})
+	}
+	$scope.loadCurrentMaterials();
 }])
 
 controllers.controller('locationController', ['$scope', '$rootScope','$location','$http', function($scope, $rootScope,$location,$http) {
@@ -180,9 +192,9 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 		}
 	
 	$scope.initializeMap = function (destination) {
-		if($rootScope.map){
-			return;
-		}
+//		if($rootScope.map){
+//			return;
+//		}
 		var center = new google.maps.LatLng(-34.602128,-58.430895);
 		var mapOptions = {
 				center : new google.maps.LatLng(-34.602128, -58.430895),
@@ -242,6 +254,23 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 		})
 	}
 	
+	$scope.loadCurrentLocation = function(){
+		$http.get("/currentUser").success(function(data){
+			if(data.lat && data.lon){
+				var point=new google.maps.LatLng(data.lat,data.lon);
+				 $rootScope.marker = new google.maps.Marker({
+				        position: point,
+				        map: $rootScope.map,
+				        draggable:true,
+				        title: "ubicacion"
+				    });
+				 $rootScope.map.setCenter(point);
+
+			}
+		})
+	}
+	
 	$scope.initializeMap("map-registration");
 	$scope.initGcba();
+	$scope.loadCurrentLocation();
 }])
