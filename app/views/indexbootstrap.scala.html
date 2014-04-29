@@ -98,8 +98,8 @@
           <div class="wizard">
               <div class="col-lg-12">
               <a href="/#home"><span class="badge">1</span><span @if(user!=null){ class="donestep" } > Ingresa con Facebook</span></a>
-              <a id="step2" href="/#location"><span class="badge">2</span><span @if(user!=null && user.lat!=null){ class="donestep" }> Indica tu ubicación</span></a>
-              <a href="/#materials"><span class="badge">3</span><span @if(user!=null && user.recycledItems!=null){ class="donestep" }> Marca los materiales que separas</span></a>
+              <a id="step2" href="/#location"><span class="badge">2</span><span @if(user==null || (user.lat!=null)){ class="donestep" }> Indica tu ubicación</span></a>
+              <a href="/#materials"><span class="badge">3</span><span @if(user == null || (user.lat!=null && user.recycledItems!=null)){ class="donestep" }> Marca los materiales que separas</span></a>
               </div>
           </div>
         </div>

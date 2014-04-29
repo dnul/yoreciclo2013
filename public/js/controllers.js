@@ -103,7 +103,6 @@ controllers.controller('materialsController', ['$scope', '$rootScope','$location
 	
 	$scope.toggleMaterial=function(id){
 		$scope.selectionChanged=true;
-		console.log(id);
 		if($scope.materials[id]){
 			delete $scope.materials[id]
 			$scope.materialCount-=1
@@ -115,14 +114,19 @@ controllers.controller('materialsController', ['$scope', '$rootScope','$location
 	}
 	$scope.loadCurrentMaterials = function(){
 		$http.get("/currentUser").success(function(data){
-			var items=data.recycledItems.replace('[','').replace(']','').replace(' ','').split(',')
- 
-			for(var i=0;i<items.length;i++){
-				var id=items[i];
-				$scope.materials[id]=1;
-				$scope.materialCount+=1
-			}
-			$scope.materialCount=items.length;
+				if (data.recycledItems) {
+					var items = data.recycledItems.replace('[', '')
+							.replace(']', '').replace(' ', '')
+							.split(',')
+					console.log(items);
+					for ( var i = 0; i < items.length; i++) {
+						var id = items[i].trim();
+						console.log(id);
+						$scope.materials[id] = 1;
+						$scope.materialCount += 1
+					}
+					$scope.materialCount = items.length;
+				}
 		})
 	}
 	$scope.loadCurrentMaterials();
@@ -133,6 +137,7 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 	console.log('location controller');
 	$rootScope.ac=null;
 	$rootScope.marker=null;
+	$scope.selectionChanged=false;
 	$scope.initGcba = function() {
 		var ac = new usig.AutoCompleter('address', {
    			rootUrl: 'http://servicios.usig.buenosaires.gob.ar/usig-js/3.0/',
@@ -170,6 +175,9 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 								        var lat=$rootScope.marker.position.lat();
 								        var lng=$rootScope.marker.position.lng();
 								        $scope.mapCoordenates = [lat,lng];
+								        console.log($scope.mapCoordenates);
+								        console.log($scope.mapCoordenates);
+								        $scope.selectionChanged=true;
 										$scope.$apply();
 								    }
 								);
@@ -177,6 +185,7 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 							$rootScope.marker.setMap($rootScope.map);
 							$rootScope.map.setCenter($rootScope.marker.getPosition());
 							$scope.mapCoordenates = [d.resultado.y,d.resultado.x];
+							$scope.selectionChanged=true;
 							$scope.$apply();
 						},
 						error : null
@@ -236,12 +245,16 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 				    function() {
 				        var lat=$rootScope.marker.position.lat();
 				        var lng=$rootScope.marker.position.lng();
+				        console.log($scope.mapCoordenates);
+				        console.log($scope.mapCoordenates);
 				        $scope.mapCoordenates = ([lat,lng]);
 					    $scope.$apply();
+					    $scope.selectionChanged=true;
 				    }
 				);
 		    
 		    $scope.mapCoordenates = [event.latLng.d,event.latLng.e];
+		    $scope.selectionChanged=true;
 		    $scope.$apply();
 		    $rootScope.$apply();
 		});
@@ -256,7 +269,7 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 	
 	$scope.loadCurrentLocation = function(){
 		$http.get("/currentUser").success(function(data){
-			if(data.lat && data.lon){
+			if(data!=null && data.lat && data.lon){
 				var point=new google.maps.LatLng(data.lat,data.lon);
 				 $rootScope.marker = new google.maps.Marker({
 				        position: point,
@@ -265,6 +278,21 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 				        title: "ubicacion"
 				    });
 				 $rootScope.map.setCenter(point);
+				 
+				 google.maps.event.addListener(
+							$rootScope.marker,
+						    'dragend',
+						    function() {
+						        var lat=$rootScope.marker.position.lat();
+						        var lng=$rootScope.marker.position.lng();
+						        $scope.mapCoordenates = [lat,lng];
+						        console.log($scope.mapCoordenates);
+						        console.log($scope.mapCoordenates);
+						        $scope.selectionChanged=true;
+								$scope.$apply();
+						    }
+						);
+				 
 
 			}
 		})
