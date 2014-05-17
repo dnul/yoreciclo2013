@@ -32,7 +32,7 @@ public class Application extends Controller {
     	AuthUser user = PlayAuthenticate.getUser(session());
     	User appUser = User.findByAuthUserIdentity(user);
     	
-        return ok(indexbootstrap.render(appUser));
+        return ok(views.html.indexhackathon.render(appUser));
     }
     
 public static Result indexHackathon() {
