@@ -32,7 +32,8 @@ public class Application extends Controller {
     	AuthUser user = PlayAuthenticate.getUser(session());
     	User appUser = User.findByAuthUserIdentity(user);
     	
-        return ok(views.html.indexhackathon.render(appUser));
+    	return redirect("/hackathon#/coperativas");
+//        return ok(views.html.indexhackathon.render(appUser));
     }
     
 public static Result indexHackathon() {
