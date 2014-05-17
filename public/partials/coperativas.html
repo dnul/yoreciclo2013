@@ -1,0 +1,23 @@
+<div class="container-location">
+	<div class="container" style="padding-bottom: 20px;">
+		<form class="form-horizontal" name="form">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Ingresa tu dirección</label>
+					<div class="col-lg-4">
+						<input type="text"
+							id="address" ng-model="address" class="form-control"
+							placeholder="ej: pringles 1249 o Sante Fe av y Callao av">
+					</div>
+					<label class="col-lg-2 control-label">o hace click en el mapa</label>
+						<span style="font-size:1.5em;" ng-click="registerLocation(mapCoordenates)"ng-class="{'col-lg-4':true,'glyphicon':true,'glyphicon-ok-sign':true,'glyphicon-grey': !mapCoordenates}"></span>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+
+<div id="map-registration" class="map"
+	style="height: 300px; width: 100%;"></div>
+
+

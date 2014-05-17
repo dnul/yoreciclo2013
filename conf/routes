@@ -8,7 +8,6 @@ GET     /logout                     com.feth.play.module.pa.controllers.Authenti
 GET     /authenticate/:provider     com.feth.play.module.pa.controllers.Authenticate.authenticate(provider: String)
 GET     /authenticate/:provider/denied     controllers.Application.oAuthDenied(provider: String)
 GET     /registration     controllers.Application.registration()
-GET     /header     controllers.Application.header()
 GET     /footer     controllers.Application.footer()
 GET     /docHead     controllers.Application.docHead()
 GET		/registerMaps controllers.Application.maps()
@@ -18,7 +17,6 @@ GET		/registeredUsers 			controllers.Application.registeredUsers()
 GET		/currentUser		controllers.Application.getCurrentUser()
 
 #registration
-POST     /signup     controllers.Registration.signUp()
 POST	 /submitAddress		controllers.Application.submitAddress()
 POST	 /submitMaterials	controllers.Application.submitMaterials()
 

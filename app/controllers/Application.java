@@ -83,7 +83,6 @@ public class Application extends Controller {
 		AuthUser user = PlayAuthenticate.getUser(session());
 		final User localUser = User.findByAuthUserIdentity(user);
 		ArrayNode array = (ArrayNode) asJson;
-		System.out.println(array);
 		String lat= array.get(0).asText();
 		String lng= array.get(1).asText();
 		localUser.lat=lat;
