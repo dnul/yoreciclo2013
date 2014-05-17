@@ -302,3 +302,195 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 	$scope.initGcba();
 	$scope.loadCurrentLocation();
 }])
+
+
+controllers.controller('coperativaController', ['$scope', '$rootScope','$location','$http', function($scope, $rootScope,$location,$http) {
+	
+	console.log('coperativa controller');
+	$rootScope.ac=null;
+	$rootScope.marker=null;
+	$scope.selectionChanged=false;
+	$scope.initGcba = function() {
+		var ac = new usig.AutoCompleter('address', {
+   			rootUrl: 'http://servicios.usig.buenosaires.gob.ar/usig-js/3.0/',
+   			skin: 'usig4',
+   			onReady: function() {
+   				$('#address').val('').focus();
+   			},
+   			afterSelection: function(option) {
+   				// console.log('Se seleccionó la opción: '+option);
+   			},
+			afterGeoCoding : function(pt) {
+				if (pt instanceof usig.Punto) {
+					$.ajax({
+						type : "GET",
+						url : 'http://ws.usig.buenosaires.gob.ar/rest/convertir_coordenadas?x=' + pt.x +'&y=' + pt.y + '&output=lonlat',
+						data : null,
+						dataType: 'jsonp',
+						success : function(d) {
+							var myLatlng = new google.maps.LatLng(d.resultado.y,d.resultado.x);
+							if($rootScope.marker){
+								$rootScope.marker.setMap(null);
+								delete $rootScope.marker;
+								delete $scope.mapCoordenates;
+							}
+							
+							$rootScope.marker = new google.maps.Marker({
+							      position: myLatlng,
+							      draggable:true
+							  });
+							
+							google.maps.event.addListener(
+									$rootScope.marker,
+								    'dragend',
+								    function() {
+								        var lat=$rootScope.marker.position.lat();
+								        var lng=$rootScope.marker.position.lng();
+								        $scope.mapCoordenates = [lat,lng];
+								        console.log($scope.mapCoordenates);
+								        console.log($scope.mapCoordenates);
+								        $scope.selectionChanged=true;
+										$scope.$apply();
+								    }
+								);
+							
+							$rootScope.marker.setMap($rootScope.map);
+							$rootScope.map.setCenter($rootScope.marker.getPosition());
+							$scope.mapCoordenates = [d.resultado.y,d.resultado.x];
+							$scope.selectionChanged=true;
+							$scope.$apply();
+						},
+						error : null
+					});
+				}
+			}
+		});
+		ac.addSuggester('Catastro', {
+			inputPause : 200,
+			minTextLength : 1,
+			showError : false
+		});
+		}
+	
+	$scope.initializeMap = function (destination) {
+		
+        //Intialize the Direction Service
+        $scope.service = new google.maps.DirectionsService();
+        
+		$scope.path=new google.maps.MVCArray();
+		$scope.markers=[]
+
+		var center = new google.maps.LatLng(-34.602128,-58.430895);
+		var mapOptions = {
+				center : new google.maps.LatLng(-34.602128, -58.430895),
+				zoom : 13,
+				mapTypeId : google.maps.MapTypeId.ROADMAP,
+				panControl : false,
+				zoomControl : true,
+				mapTypeControl : false,
+				scaleControl : false,
+				streetViewControl : false,
+				overviewMapControl : false,
+				scrollwheel:false
+			};
+		var map = new google.maps.Map(document.getElementById(destination),
+				mapOptions);
+		
+		$rootScope.map=map;
+
+		map.setCenter(center);
+		map.setZoom(15);
+		
+		google.maps.event.addListener(map, "click", function(event) {
+		   
+
+		    var marker = new google.maps.Marker({
+		        position: event.latLng,
+		        map: $rootScope.map,
+		        draggable:true,
+		        title: $scope.markers.length + "id"
+		    });
+		    
+		    marker.idpath=$scope.markers.length;
+		    
+		    $scope.markers.push(marker);
+		    
+		    google.maps.event.addListener(
+		    		marker,
+				    'dragend',
+				    function() {
+				        var lat=marker.position.lat();
+				        var lng=marker.position.lng();
+				        console.log($scope.mapCoordenates);
+				        console.log($scope.mapCoordenates);
+				        $scope.mapCoordenates = ([lat,lng]);
+					    $scope.$apply();
+					    $scope.selectionChanged=true;
+				    }
+				);
+		    
+		    $scope.drawRoute();
+		    $scope.$apply();
+		    $rootScope.$apply();
+		});
+	}
+	
+	
+	$scope.drawRoute= function(){
+		if($scope.poly!=null){
+			console.log('delete poly')
+			$scope.poly.setMap(null);
+			$scope.path=new google.maps.MVCArray(); 
+		}
+        $scope.poly = new google.maps.Polyline({ map: $rootScope.map, strokeColor: '#4986E7' });
+
+        var waypoints=[]
+        for(var i=1; i < $scope.markers.length-1; i++){
+        	waypoints.push({location:$scope.markers[i].position}); 
+        }
+        console.log(waypoints);
+        
+        var request = {
+        	      origin: $scope.markers[0].position,
+        	      destination: $scope.markers[$scope.markers.length-1].position,
+        	      waypoints: waypoints,
+        	      optimizeWaypoints: false,
+        	      travelMode: google.maps.TravelMode.WALKING
+        	  };
+        
+        $scope.poly.setPath($scope.path);
+        $scope.service.route(request, function (result, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                for (var i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
+                    $scope.path.push(result.routes[0].overview_path[i]);
+                }
+            }
+        });
+        
+		//Loop and Draw Path Route between the Points on MAP
+//        for (var i = 20; i < $scope.markers.length; i++) {
+//            if ((i + 1) < $scope.markers.length) {
+//            	
+//                var src = $scope.markers[i].position;
+//                var des = $scope.markers[i + 1].position;
+//                
+////                $scope.path.push(src);
+//                $scope.poly.setPath($scope.path);
+//                $scope.service.route({
+//                    origin: src,
+//                    destination: des,
+//                    travelMode: google.maps.DirectionsTravelMode.WALKING
+//                }, function (result, status) {
+//                    if (status == google.maps.DirectionsStatus.OK) {
+//                        for (var i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
+//                            $scope.path.push(result.routes[0].overview_path[i]);
+//                        }
+//                    }
+//                });
+//            }
+//        }
+	}
+	
+	$scope.initializeMap("map-registration");
+	$scope.initGcba();
+}])
