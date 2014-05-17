@@ -305,7 +305,8 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 
 controllers.controller('coperativaController', ['$scope', '$rootScope','$location','$http', function($scope, $rootScope,$location,$http) {
 	
-	$scope.colors=['#ff33ee','#eeff00','#00ff77'];
+	$scope.colors=['#5680fc','#55d7d7','#7e55fc','#00e13c','#ef9e40','#9e7151','#00e13c','#e14f9e','#a9a9a9'];
+	$scope.colorIndex=0;
 	$scope.recuperadores=[{name:"Martin Rodriguez"},{name:"Pablo Rodriguez"},{name:"Juan Rodriguez"},{name:"Mariano Rodriguez"}]
 	console.log('coperativa controller');
 	$rootScope.ac=null;
@@ -424,8 +425,6 @@ controllers.controller('coperativaController', ['$scope', '$rootScope','$locatio
 				    function() {
 				        var lat=marker.position.lat();
 				        var lng=marker.position.lng();
-				        console.log($scope.mapCoordenates);
-				        console.log($scope.mapCoordenates);
 				        $scope.mapCoordenates = ([lat,lng]);
 					    $scope.$apply();
 					    $scope.selectionChanged=true;
@@ -444,17 +443,18 @@ controllers.controller('coperativaController', ['$scope', '$rootScope','$locatio
 		$scope.poly = null;
 		$scope.markers=[];
 		$scope.path=[];
-		console.log($scope.markers);
+		$scope.colorIndex+=1;
 	}
 	$scope.stopRecorrido=function(){
 		console.log($scope.path);
 		$scope.recorridoId+=1;
-		var recorrido = {id:$scope.recorridoId,color:'#FF000'};
+		var recorrido = {id:$scope.recorridoId,color:$scope.colors[$scope.colorIndex]};
 		$scope.currentRecorrido=recorrido;
 		$scope.currentRecorrido.path=$scope.path;
 		$scope.currentRecorrido.poly=$scope.poly;
 		$scope.recorridos.push($scope.currentRecorrido);
 		console.log($scope.recorridos);
+		$scope.newRecorrido();
 	}
 	
 	$scope.drawRoute = function(){
@@ -463,7 +463,12 @@ controllers.controller('coperativaController', ['$scope', '$rootScope','$locatio
 			$scope.poly.setMap(null);
 			$scope.path=new google.maps.MVCArray(); 
 		}
-        $scope.poly = new google.maps.Polyline({ map: $rootScope.map, strokeColor: '#4986E7' });
+		console.log($scope.colors);
+		var strokeColor=$scope.colors[$scope.colorIndex];
+		
+		console.log(strokeColor);
+        $scope.poly = new google.maps.Polyline({ map: $rootScope.map, strokeColor: strokeColor });
+        
 
         var waypoints=[]
         for(var i=1; i < $scope.markers.length-1; i++){
