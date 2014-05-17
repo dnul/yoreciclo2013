@@ -4,7 +4,8 @@
 // Declare app level module which depends on filters, and services
 angular.module('yoreciclo', [
   'ngRoute',
-  'yoreciclo.controllers'
+  'yoreciclo.controllers',
+  'ui.bootstrap'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -13,5 +14,7 @@ config(['$routeProvider', function($routeProvider) {
   .when('/materials', {templateUrl: 'assets/partials/material.html',controller:'materialsController'})
   .when('/location', {templateUrl: 'assets/partials/location.html',controller:'locationController'})
   .when('/coperativas', {templateUrl: 'assets/partials/coperativas.html',controller:'coperativaController'})
+  .when('/hackathon', {templateUrl: 'assets/partials/coperativas.html',controller:'coperativaController'})
   .otherwise({redirectTo: '/'});
 }]);
+

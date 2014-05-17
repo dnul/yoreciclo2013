@@ -16,8 +16,39 @@
 		</form>
 		{{markers.length}}
 		{{path.size}}
+		{{scope.recorridos}}
+	</div>
+	<div class="container">
+	<h2>Recorridos</h2>
+		<input ng-show="recorridos.length>0"type="button" ng-click="newRecorrido()">Nuevo</input>
+		 <input type="button" ng-click="stopRecorrido()">Guardar</input>
+	
+		<table class="table col-lg-8">
+		<thead>
+			<tr>
+				<th class="col-lg-1">Id</th>
+				<th class="col-lg-2">Color</th>
+				<th class="col-lg-1">Puntos</th>
+				<th class="col-lg-3">Recuperador</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="rec in recorridos">
+				<td class="col-lg-1">{{rec.id}}</td>
+				<td class="col-lg-1">{{rec.color}}</td>
+				<td class="col-lg-1">{{rec.path.length}}</td>
+				<td class="col-lg-3">
+					<input type="text" placeholder="Elija recuperador" ng-model="selected" typeahead="rec.name for rec in recuperadores" class="form-control">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<label class="col-lg-2 control-label">
+				<span style="font-size:1.5em;" class="glyphicon glyphicon-plus" ng-click="newRecorrido()"></span>
+	</label>
 	</div>
 </div>
+	
 
 
 <div id="map-registration" class="map"

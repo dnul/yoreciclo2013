@@ -204,6 +204,7 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 //		if($rootScope.map){
 //			return;
 //		}
+		
 		var center = new google.maps.LatLng(-34.602128,-58.430895);
 		var mapOptions = {
 				center : new google.maps.LatLng(-34.602128, -58.430895),
@@ -292,8 +293,6 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 								$scope.$apply();
 						    }
 						);
-				 
-
 			}
 		})
 	}
@@ -306,9 +305,12 @@ controllers.controller('locationController', ['$scope', '$rootScope','$location'
 
 controllers.controller('coperativaController', ['$scope', '$rootScope','$location','$http', function($scope, $rootScope,$location,$http) {
 	
+	$scope.colors=['#ff33ee','#eeff00','#00ff77'];
+	$scope.recuperadores=[{name:"Martin Rodriguez"},{name:"Pablo Rodriguez"},{name:"Juan Rodriguez"},{name:"Mariano Rodriguez"}]
 	console.log('coperativa controller');
 	$rootScope.ac=null;
 	$rootScope.marker=null;
+	$scope.recorridos=[];
 	$scope.selectionChanged=false;
 	$scope.initGcba = function() {
 		var ac = new usig.AutoCompleter('address', {
@@ -376,6 +378,7 @@ controllers.controller('coperativaController', ['$scope', '$rootScope','$locatio
 		
         //Intialize the Direction Service
         $scope.service = new google.maps.DirectionsService();
+        $scope.recorridoId=0;
         
 		$scope.path=new google.maps.MVCArray();
 		$scope.markers=[]
@@ -414,7 +417,7 @@ controllers.controller('coperativaController', ['$scope', '$rootScope','$locatio
 		    marker.idpath=$scope.markers.length;
 		    
 		    $scope.markers.push(marker);
-		    
+		    console.log($scope.markers);   
 		    google.maps.event.addListener(
 		    		marker,
 				    'dragend',
@@ -436,7 +439,25 @@ controllers.controller('coperativaController', ['$scope', '$rootScope','$locatio
 	}
 	
 	
-	$scope.drawRoute= function(){
+	$scope.newRecorrido=function(){
+		console.log('asd');
+		$scope.poly = null;
+		$scope.markers=[];
+		$scope.path=[];
+		console.log($scope.markers);
+	}
+	$scope.stopRecorrido=function(){
+		console.log($scope.path);
+		$scope.recorridoId+=1;
+		var recorrido = {id:$scope.recorridoId,color:'#FF000'};
+		$scope.currentRecorrido=recorrido;
+		$scope.currentRecorrido.path=$scope.path;
+		$scope.currentRecorrido.poly=$scope.poly;
+		$scope.recorridos.push($scope.currentRecorrido);
+		console.log($scope.recorridos);
+	}
+	
+	$scope.drawRoute = function(){
 		if($scope.poly!=null){
 			console.log('delete poly')
 			$scope.poly.setMap(null);
@@ -448,7 +469,6 @@ controllers.controller('coperativaController', ['$scope', '$rootScope','$locatio
         for(var i=1; i < $scope.markers.length-1; i++){
         	waypoints.push({location:$scope.markers[i].position}); 
         }
-        console.log(waypoints);
         
         var request = {
         	      origin: $scope.markers[0].position,
@@ -466,29 +486,6 @@ controllers.controller('coperativaController', ['$scope', '$rootScope','$locatio
                 }
             }
         });
-        
-		//Loop and Draw Path Route between the Points on MAP
-//        for (var i = 20; i < $scope.markers.length; i++) {
-//            if ((i + 1) < $scope.markers.length) {
-//            	
-//                var src = $scope.markers[i].position;
-//                var des = $scope.markers[i + 1].position;
-//                
-////                $scope.path.push(src);
-//                $scope.poly.setPath($scope.path);
-//                $scope.service.route({
-//                    origin: src,
-//                    destination: des,
-//                    travelMode: google.maps.DirectionsTravelMode.WALKING
-//                }, function (result, status) {
-//                    if (status == google.maps.DirectionsStatus.OK) {
-//                        for (var i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
-//                            $scope.path.push(result.routes[0].overview_path[i]);
-//                        }
-//                    }
-//                });
-//            }
-//        }
 	}
 	
 	$scope.initializeMap("map-registration");

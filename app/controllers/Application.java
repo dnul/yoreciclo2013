@@ -35,6 +35,14 @@ public class Application extends Controller {
         return ok(indexbootstrap.render(appUser));
     }
     
+public static Result indexHackathon() {
+    	
+    	AuthUser user = PlayAuthenticate.getUser(session());
+    	User appUser = User.findByAuthUserIdentity(user);
+    	
+        return ok(views.html.indexhackathon.render(appUser));
+    }
+    
     public static Result oAuthDenied(final String providerKey) {
         flash("flash",
                 "You need to accept the OAuth connection in order to use this website!");
